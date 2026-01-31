@@ -63,6 +63,7 @@ create table if not exists action_proposals (
 -- 7. Audit Logs
 create table if not exists audit_logs (
   id uuid primary key default uuid_generate_v4(),
+  run_id text, -- Groups logs from the same agent loop execution
   step text not null, -- "Observe", "Synthesize", "Act"
   details jsonb,
   agent_version text default 'v1.0',
