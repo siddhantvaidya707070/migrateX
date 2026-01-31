@@ -1,0 +1,29 @@
+
+> prob2@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 1 errors:
+./app/framer-styles.css:1268:22
+Parsing CSS source code failed
+  1266 | code.framer-text span.framer-text[data-nested-link]:hover,
+  1267 | code.framer-text span.framer-text[data-nested-link]:hover span.framer-text:not([data-text-fill]) {
+> 1268 |     font-family: var(var(--framer-code-font-family, var(--framer-font-family, Inter, Inter Placeholder, sans-serif)));
+       |                      ^
+  1269 |     font-style: var(--framer-blockquote-font-style, var(--framer-code-font-style, var(--framer-font-style, normal)));
+  1270 |     font-weight: var(--framer-blockquote-font-weight, var(--framer-code-font-weight, var(--framer-font-weight, 400)));
+  1271 |     color: var(--framer-link-hover-text-color, var(--framer-blockquote-text-color, var(--framer-link-text-color, var(--framer-code-text-color, var(--framer-text-color, #000)))));
+
+Unexpected token Function("var")
+
+Import trace:
+  Client Component Browser:
+    ./app/framer-styles.css [Client Component Browser]
+    ./app/layout.tsx [Server Component]
+
+
+    at <unknown> (./app/framer-styles.css:1268:22)
