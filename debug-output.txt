@@ -1,0 +1,40 @@
+File length: 615288
+
+"section class="framer-1e7a4qw"" -> index: 380516
+  Context: iv></div></section><section class="framer-1e7a4qw" data-framer-name="Tech stack" id="tech-stack"><di
+
+"framer-1e7a4qw" -> index: 61194
+  Context: tive}.framer-v1R3P .framer-1e7a4qw{flex-flow:column;flex:none;place-content:center;align-items:cente
+
+"id="tech-stack"" -> index: 380577
+  Context: r-name="Tech stack" id="tech-stack"><div class="framer-b07tg8" data-framer-name="Container"><div cla
+
+"section class="framer-a85jvv"" -> index: 318731
+  Context: iv></div></section><section class="framer-a85jvv" data-framer-name="Pain points"><div class="framer-
+
+"framer-a85jvv" -> index: 53087
+  Context: tive}.framer-v1R3P .framer-a85jvv{flex-flow:column;flex:none;place-content:center;align-items:center
+
+"Is This You" -> index: 318913
+  Context: " data-framer-name="Is This You?" style="transform:none" data-framer-component-type="RichTextContain
+
+"Pain points" -> index: 318779
+  Context: " data-framer-name="Pain points"><div class="framer-1jk3gd8" data-framer-name="Sticky section" id="p
+
+"You need AI" -> index: 320650
+  Context: t-alignment:center">You need AI, but don’t know where to start</h3></div><div data-framer-component-
+
+--- All section tags ---
+Section 0: <section class="framer-5m80dv" data-framer-name="Hero">
+Section 1: <section class="framer-a85jvv" data-framer-name="Pain points">
+Section 2: <section class="framer-ztkied" data-framer-name="Our solution" id="services">
+Section 3: <section class="framer-cy0c5e" data-framer-name="Our work" id="case-studies">
+Section 4: <section class="framer-63wg23" data-framer-name="Why top brand trust us">
+Section 5: <section style="display:flex;width:100%;height:100%;max-width:100%;max-height:100%;place-items:center;margin:0;padding:0...
+Section 6: <section class="framer-1e7a4qw" data-framer-name="Tech stack" id="tech-stack">
+Section 7: <section class="framer-gPWPw framer-MPHzQ framer-6v8Ld framer-mZMEq framer-CgG90 framer-tvbog framer-fP6ft framer-0bWJ9 ...
+Section 8: <section class="framer-tIbLD framer-MPHzQ framer-hTzan framer-65hl98 framer-v-65hl98" data-framer-name="Desktop - Monthl...
+Section 9: <section class="framer-2xi8dq" data-framer-name="Meet the experts">
+Section 10: <section class="framer-1sqmxv0" data-framer-name="FAQ">
+Section 11: <section class="framer-smtkz6" data-framer-name="Latest Insights">
+Section 12: <section class="framer-161loow" data-framer-name="Contact" id="contact">

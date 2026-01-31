@@ -1,4 +1,5 @@
 import './framer-styles.css';
+import './ui-elements-sections.css';
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
