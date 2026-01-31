@@ -41,8 +41,12 @@ export const ObservationEngine = {
         const clusters = new Map<string, typeof events>()
 
         // Cluster by fingerprint
+        // WHY: We prefer the fingerprint stored in raw_event (from ingestion/simulation)
+        // because it was carefully generated to enable proper clustering.
+        // Only generate a new fingerprint if none exists (legacy events).
         for (const event of events) {
-            const fingerprint = this.generateFingerprint(event)
+            // Use stored fingerprint if available, otherwise generate
+            const fingerprint = event.fingerprint || this.generateFingerprint(event)
             if (!clusters.has(fingerprint)) {
                 clusters.set(fingerprint, [])
             }
