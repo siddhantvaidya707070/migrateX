@@ -6,158 +6,16 @@ import { Settings, Shield, TrendingUp, Scale, Droplet, Network, Zap, Target, Arr
 import { motion } from 'framer-motion'
 import NeuralBackground from '@/components/ui/flow-field-background'
 import { SettingsDropdown } from '@/components/layout/settings-dropdown'
-import { IntelligenceQueue, type QueueItem } from '@/components/ui/intelligence-queue'
+
 import { BentoGrid } from '@/components/ui/bento-grid'
 
 const navItems = [
-  { label: 'Features', href: '#intelligence-queue' },
+
   { label: 'Services', href: '#services' },
   { label: 'FAQ', href: '#faq' },
 ]
 
-// Intelligence Queue Items - 20 Financial Intelligence Categories
-const intelligenceItems: QueueItem[] = [
-  {
-    id: '1',
-    headline: 'Adaptive Risk Monitoring',
-    subtext: 'Real-time portfolio risk assessment',
-    detailTitle: 'Adaptive Risk Monitoring System',
-    detailContent: 'Continuously monitors portfolio risk metrics in real-time, dynamically adjusting risk thresholds based on market conditions, volatility regimes, and position concentrations. The system automatically escalates alerts when risk levels approach predefined boundaries and suggests protective actions to maintain portfolio stability.'
-  },
-  {
-    id: '2',
-    headline: 'Currency Exposure Management',
-    subtext: 'FX risk hedging optimization',
-    detailTitle: 'Currency Exposure Management',
-    detailContent: 'Tracks and manages foreign exchange exposures across all international holdings. Automatically recommends hedging strategies when currency risk exceeds tolerance levels, optimizing hedge ratios to balance cost versus protection. Monitors central bank policy signals and macroeconomic indicators affecting currency valuations.'
-  },
-  {
-    id: '3',
-    headline: 'Yield Curve Inversion Detection',
-    subtext: 'Fixed income signal analysis',
-    detailTitle: 'Yield Curve Inversion Detection',
-    detailContent: 'Monitors treasury yield curves across multiple maturities to detect inversions and other anomalies signaling potential economic shifts. Provides duration recommendations and fixed income positioning strategies based on historical patterns following similar curve configurations.'
-  },
-  {
-    id: '4',
-    headline: 'Dividend Opportunity Identification',
-    subtext: 'Income-generating stock screening',
-    detailTitle: 'Dividend Opportunity Identification',
-    detailContent: 'Screens for high-quality dividend opportunities using multi-factor analysis including payout ratios, dividend growth history, earnings stability, and valuation metrics. Identifies dividend aristocrats trading below historical norms with sustainable yield premiums above market averages.'
-  },
-  {
-    id: '5',
-    headline: 'Options Strategy Optimization',
-    subtext: 'Derivative income enhancement',
-    detailTitle: 'Options Strategy Optimization',
-    detailContent: 'Analyzes implied versus realized volatility across portfolio holdings to identify optimal options strategies. Recommends covered calls, protective puts, and spread strategies to enhance income generation while managing downside risk. Calculates expected returns and break-even points for each strategy.'
-  },
-  {
-    id: '6',
-    headline: 'Volatility Threshold Alerts',
-    subtext: 'Market regime detection',
-    detailTitle: 'Volatility Threshold Alerts',
-    detailContent: 'Monitors VIX and individual asset volatilities against configurable thresholds. Triggers alerts when volatility spikes indicate potential market stress, enabling proactive risk reduction. Differentiates between temporary volatility events and sustained regime changes requiring portfolio adjustments.'
-  },
-  {
-    id: '7',
-    headline: 'Sector Rotation Analysis',
-    subtext: 'Tactical allocation signals',
-    detailTitle: 'Sector Rotation Analysis',
-    detailContent: 'Tracks relative sector performance and momentum to identify rotation opportunities. Analyzes economic cycle indicators to anticipate sector leadership changes and recommends tactical allocation shifts to capture alpha from sector transitions while managing concentration risk.'
-  },
-  {
-    id: '8',
-    headline: 'Liquidity Risk Detection',
-    subtext: 'Position exit feasibility analysis',
-    detailTitle: 'Liquidity Risk Detection',
-    detailContent: 'Evaluates position sizes relative to average daily volumes and bid-ask spreads. Flags illiquid positions that may be difficult to exit during market stress. Recommends position size limits and suggests liquidity buffers to ensure portfolio flexibility during volatile periods.'
-  },
-  {
-    id: '9',
-    headline: 'Macro Regime Shift Recognition',
-    subtext: 'Economic environment classification',
-    detailTitle: 'Macro Regime Shift Recognition',
-    detailContent: 'Classifies current macroeconomic environment across dimensions including growth, inflation, and monetary policy. Detects regime transitions and recommends portfolio positioning aligned with historical asset class performance during similar regimes.'
-  },
-  {
-    id: '10',
-    headline: 'Correlation Breakdown Analysis',
-    subtext: 'Diversification effectiveness monitoring',
-    detailTitle: 'Correlation Breakdown Analysis',
-    detailContent: 'Monitors rolling correlations between portfolio assets to assess diversification effectiveness. Alerts when correlations spike during market stress, potentially reducing diversification benefits precisely when needed most. Recommends alternative diversifiers with historically stable correlation profiles.'
-  },
-  {
-    id: '11',
-    headline: 'Alpha Decay Monitoring',
-    subtext: 'Strategy performance degradation tracking',
-    detailTitle: 'Alpha Decay Monitoring',
-    detailContent: 'Tracks performance attribution to detect when investment strategies show signs of alpha decay. Identifies factors contributing to performance degradation and recommends strategy modifications or replacements before significant value destruction occurs.'
-  },
-  {
-    id: '12',
-    headline: 'Dynamic Hedge Adjustment',
-    subtext: 'Protective position optimization',
-    detailTitle: 'Dynamic Hedge Adjustment',
-    detailContent: 'Continuously optimizes hedge ratios based on portfolio composition changes and market conditions. Balances hedge effectiveness against cost, recommending adjustments when protection levels drift from targets or when hedging costs become unfavorable.'
-  },
-  {
-    id: '13',
-    headline: 'Probabilistic Risk Scoring',
-    subtext: 'Scenario-based risk quantification',
-    detailTitle: 'Probabilistic Risk Scoring',
-    detailContent: 'Generates probability-weighted risk scores incorporating multiple stress scenarios and tail risk events. Provides intuitive risk dashboards translating complex model outputs into actionable intelligence for portfolio managers.'
-  },
-  {
-    id: '14',
-    headline: 'Multi-Factor Signal Confluence',
-    subtext: 'Cross-validation of investment signals',
-    detailTitle: 'Multi-Factor Signal Confluence',
-    detailContent: 'Aggregates signals from multiple independent factors including momentum, value, quality, and sentiment. Identifies high-conviction opportunities where multiple factors align, increasing probability of successful trades while filtering noise from individual factor signals.'
-  },
-  {
-    id: '15',
-    headline: 'Real-Time Portfolio Diagnostics',
-    subtext: 'Continuous health monitoring',
-    detailTitle: 'Real-Time Portfolio Diagnostics',
-    detailContent: 'Provides instant visibility into portfolio health metrics including risk exposures, factor loadings, concentration levels, and performance attribution. Enables rapid diagnosis of performance drivers and risk sources for immediate decision-making.'
-  },
-  {
-    id: '16',
-    headline: 'Automated Strategy Rebalancing',
-    subtext: 'Target allocation maintenance',
-    detailTitle: 'Automated Strategy Rebalancing',
-    detailContent: 'Automatically triggers rebalancing when portfolio weights drift beyond tolerance bands. Optimizes rebalancing timing to minimize transaction costs while maintaining target exposures. Incorporates tax-loss harvesting opportunities into rebalancing decisions.'
-  },
-  {
-    id: '17',
-    headline: 'Execution Slippage Detection',
-    subtext: 'Trade cost analysis',
-    detailTitle: 'Execution Slippage Detection',
-    detailContent: 'Measures execution quality by comparing actual fill prices against benchmark prices. Identifies patterns of excessive slippage indicating potential execution issues or adverse selection. Recommends execution algorithm adjustments to minimize implementation shortfall.'
-  },
-  {
-    id: '18',
-    headline: 'Position Sizing Optimization',
-    subtext: 'Risk-adjusted allocation',
-    detailTitle: 'Position Sizing Optimization',
-    detailContent: 'Calculates optimal position sizes based on expected return, volatility, correlation with existing holdings, and portfolio-level risk constraints. Prevents oversized positions that could dominate portfolio performance while ensuring meaningful allocation to high-conviction ideas.'
-  },
-  {
-    id: '19',
-    headline: 'Drawdown Risk Control',
-    subtext: 'Peak-to-trough loss management',
-    detailTitle: 'Drawdown Risk Control',
-    detailContent: 'Monitors portfolio drawdowns in real-time and triggers defensive actions when losses approach predefined thresholds. Implements systematic de-risking protocols to prevent catastrophic losses while preserving upside participation when conditions normalize.'
-  },
-  {
-    id: '20',
-    headline: 'Continuous Model Validation',
-    subtext: 'Ongoing strategy backtesting',
-    detailTitle: 'Continuous Model Validation',
-    detailContent: 'Continuously validates model assumptions against live market data. Detects when models deviate from expected behavior, triggering review processes before degraded models impact performance. Maintains model confidence scores updated with each new observation.'
-  }
-]
+
 
 // Services - 4 Premium Boxes with Bento Background
 const services = [
@@ -352,8 +210,7 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed font-light"
               >
-                migrateX leverages multi-agent AI systems to optimize your
-                portfolio, reduce risk, and drive intelligent investment decisions at scale.
+                World-class support agent designed for headless migration
               </motion.p>
             </motion.div>
 
@@ -371,7 +228,7 @@ export default function Home() {
                 Start Managing
               </Link>
               <button
-                onClick={() => scrollToSection('#intelligence-queue')}
+                onClick={() => scrollToSection('#services')}
                 className="px-8 py-4 text-base font-semibold text-[#F5F5F5] bg-[#C9A24D]/5 border border-[#C9A24D]/20 rounded-full hover:bg-[#C9A24D]/10 transition-all duration-300 backdrop-blur-sm whitespace-nowrap"
               >
                 Learn More
@@ -380,7 +237,7 @@ export default function Home() {
 
             {/* Scroll Indicator */}
             <motion.button
-              onClick={() => scrollToSection('#intelligence-queue')}
+              onClick={() => scrollToSection('#services')}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.6, repeat: Infinity, repeatType: "reverse" }}
@@ -408,8 +265,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Intelligence Queue Section - Full Width */}
-      <IntelligenceQueue items={intelligenceItems} />
+
 
       {/* Services Section with BentoGrid */}
       <section id="services" className="relative py-32 px-6">
@@ -527,7 +383,7 @@ export default function Home() {
             <div>
               <h4 className="text-sm font-semibold text-white mb-4">Product</h4>
               <ul className="space-y-3">
-                {['Features', 'Services', 'FAQ'].map((item) => (
+                {['Services', 'FAQ'].map((item) => (
                   <li key={item}>
                     <button onClick={() => scrollToSection(`#${item === 'Features' ? 'intelligence-queue' : item.toLowerCase()}`)} className="text-sm text-gray-400 hover:text-white transition-colors">
                       {item}

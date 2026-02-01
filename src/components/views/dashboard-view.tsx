@@ -128,29 +128,29 @@ function StatCard({ label, value, subValue, icon: Icon, color, pulse }: StatCard
                 group-hover:opacity-75 transition-opacity duration-500
             `} />
 
-            <div className="relative z-10 flex items-start justify-between">
-                <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-[#8A8A8A] uppercase tracking-widest mb-2">
-                        {label}
-                    </p>
-                    <p className="text-3xl font-bold text-[#F5F5F5] tracking-tight">
-                        {typeof value === 'number' ? value.toLocaleString() : value}
-                    </p>
-                    {subValue && (
-                        <p className="text-xs text-[#8A8A8A] mt-1.5 truncate">
-                            {subValue}
-                        </p>
-                    )}
-                </div>
+            <div className="relative z-10 flex flex-col items-center justify-center text-center h-full py-2">
                 <div className={`
-                    relative p-3 rounded-xl ${config.iconBg}
+                    relative p-3 rounded-xl ${config.iconBg} mb-4
                     ${pulse ? 'animate-pulse' : ''}
                 `}>
-                    <Icon className={`w-5 h-5 ${config.iconColor}`} />
+                    <Icon className={`w-6 h-6 ${config.iconColor}`} />
                     {pulse && (
                         <div className={`absolute inset-0 rounded-xl ${config.iconBg} animate-ping`} />
                     )}
                 </div>
+
+                <p className="text-3xl font-bold text-[#F5F5F5] tracking-tight mb-2">
+                    {typeof value === 'number' ? value.toLocaleString() : value}
+                </p>
+                <p className="text-xs font-semibold text-[#8A8A8A] uppercase tracking-widest">
+                    {label}
+                </p>
+
+                {subValue && (
+                    <p className="text-xs text-[#8A8A8A] mt-1.5 truncate">
+                        {subValue}
+                    </p>
+                )}
             </div>
         </motion.div>
     )
@@ -368,12 +368,12 @@ export function DashboardView() {
                     <QuickActionsBar stats={stats} learningsCount={learnings.length} />
                 </div>
 
-                {/* Stats Grid - 6 columns - GOLD THEME */}
+                {/* Stats Grid - 4 columns - GOLD THEME */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.1 }}
-                    className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8"
+                    className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
                 >
                     <StatCard
                         label="Events Ingested"
@@ -400,18 +400,6 @@ export function DashboardView() {
                         icon={Shield}
                         color="amber"
                         pulse={stats.pendingApprovals > 0}
-                    />
-                    <StatCard
-                        label="Tickets Drafted"
-                        value={stats.ticketsDrafted || 0}
-                        icon={MessageSquare}
-                        color="emerald"
-                    />
-                    <StatCard
-                        label="Emails Drafted"
-                        value={stats.emailsDrafted || 0}
-                        icon={Mail}
-                        color="red"
                     />
                 </motion.div>
 
