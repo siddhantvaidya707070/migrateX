@@ -1,0 +1,9 @@
+ΓÜá Port 3000 is in use by process 25660, using available port 3001 instead.
+Γû▓ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://192.168.56.1:3001
+
+Γ£ô Starting...
+Γ¿» Unable to acquire lock at C:\Users\RYZEN\Desktop\migrateX\.next\dev\lock, is another instance of next dev running?
+  Suggestion: If you intended to restart next dev, terminate the other process, and then try again.
+[?25h

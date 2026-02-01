@@ -28,7 +28,7 @@ export function Footer() {
                             <div className="w-[30px] h-[30px] rounded-lg bg-gradient-primary flex items-center justify-center">
                                 <span className="text-white font-bold text-sm">X</span>
                             </div>
-                            <span className="text-xl font-semibold text-foreground">MACANE</span>
+                            <span className="text-xl font-semibold text-foreground">migrateX</span>
                         </Link>
                         <p className="text-sm text-muted-foreground max-w-[250px]">
                             AI-powered portfolio management solutions for modern investors.
@@ -90,7 +90,7 @@ export function Footer() {
                 {/* Bottom */}
                 <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
                     <p className="text-sm text-muted-foreground">
-                        © {new Date().getFullYear()} MACANE. All rights reserved.
+                        © {new Date().getFullYear()} migrateX. All rights reserved.
                     </p>
                     <div className="flex items-center gap-6">
                         <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">

@@ -1,0 +1,234 @@
+
+> prob2@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+
+ΓÜá The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+Error: Can't resolve 'tw-animate-css' in 'C:\Users\RYZEN\Desktop\migrateX\src\app'
+    [at finishWithoutResolve (C:\Users\RYZEN\Desktop\migrateX\node_modules\enhanced-resolve\lib\Resolver.js:565:18)]
+    [at C:\Users\RYZEN\Desktop\migrateX\node_modules\enhanced-resolve\lib\Resolver.js:657:14]
+    [at C:\Users\RYZEN\Desktop\migrateX\node_modules\enhanced-resolve\lib\Resolver.js:718:5]
+    [at eval (eval at create (C:\Users\RYZEN\Desktop\migrateX\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)]
+    [at C:\Users\RYZEN\Desktop\migrateX\node_modules\enhanced-resolve\lib\Resolver.js:718:5]
+    [at eval (eval at create (C:\Users\RYZEN\Desktop\migrateX\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)]
+    [at C:\Users\RYZEN\Desktop\migrateX\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:89:43]
+    [at C:\Users\RYZEN\Desktop\migrateX\node_modules\enhanced-resolve\lib\Resolver.js:718:5]
+    [at eval (eval at create (C:\Users\RYZEN\Desktop\migrateX\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)]
+    [at C:\Users\RYZEN\Desktop\migrateX\node_modules\enhanced-resolve\lib\Resolver.js:718:5] {
+  details: "resolve 'tw-animate-css' in 'C:\\Users\\RYZEN\\Desktop\\migrateX\\src\\app'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: C:\\Users\\RYZEN\\Desktop\\migrateX\\package.json (relative path: ./src/app)\n' +
+    '    resolve as module\n' +
+    "      C:\\Users\\RYZEN\\Desktop\\migrateX\\src\\app\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\RYZEN\\Desktop\\migrateX\\src\\node_modules doesn't exist or is not a directory\n" +
+    '      looking for modules in C:\\Users\\RYZEN\\Desktop\\migrateX\\node_modules\n' +
+    '        single file module\n' +
+    '          using description file: C:\\Users\\RYZEN\\Desktop\\migrateX\\package.json (relative path: ./node_modules/tw-animate-css)\n' +
+    '            no extension\n' +
+    "              C:\\Users\\RYZEN\\Desktop\\migrateX\\node_modules\\tw-animate-css doesn't exist\n" +
+    '            .css\n' +
+    "              C:\\Users\\RYZEN\\Desktop\\migrateX\\node_modules\\tw-animate-css.css doesn't exist\n" +
+    "        C:\\Users\\RYZEN\\Desktop\\migrateX\\node_modules\\tw-animate-css doesn't exist\n" +
+    "      C:\\Users\\RYZEN\\Desktop\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\RYZEN\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\node_modules doesn't exist or is not a directory"
+}
+
+> Build error occurred
+Error: Turbopack build failed with 8 errors:
+./src/app/globals.css
+Error evaluating Node.js code
+CssSyntaxError: tailwindcss: C:\Users\RYZEN\Desktop\migrateX\src\app\globals.css:1:1: Can't resolve 'tw-animate-css' in 'C:\Users\RYZEN\Desktop\migrateX\src\app'
+    at Input.error (node_modules/postcss/lib/input.js:135:16) [C:\Users\RYZEN\Desktop\migrateX\.next\build\chunks\node_modules_fe693df6._.js:4651:22]
+    at Root.error (node_modules/postcss/lib/node.js:146:32) [C:\Users\RYZEN\Desktop\migrateX\.next\build\chunks\node_modules_fe693df6._.js:928:38]
+    [at Object.Once (C:\Users\RYZEN\Desktop\migrateX\node_modules\@tailwindcss\postcss\dist\index.js:10:6911)]
+    [at process.processTicksAndRejections (node:internal/process/task_queues:103:5)]
+    at async LazyResult.runAsync (node_modules/postcss/lib/lazy-result.js:293:11) [C:\Users\RYZEN\Desktop\migrateX\.next\build\chunks\node_modules_fe693df6._.js:6206:21]
+    at async transform (turbopack:///[turbopack-node]/transforms/postcss.ts:70:34) [C:\Users\RYZEN\Desktop\migrateX\.next\build\chunks\[root-of-the-server]__51225daf._.js:146:36]
+    at async run (turbopack:///[turbopack-node]/ipc/evaluate.ts:92:23) [C:\Users\RYZEN\Desktop\migrateX\.next\build\chunks\[root-of-the-server]__974941ed._.js:443:31]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+
+./src/components/providers/smooth-scroll.tsx:4:1
+Module not found: Can't resolve 'lenis'
+  2 |
+  3 | import { ReactNode, useEffect } from 'react'
+> 4 | import Lenis from 'lenis'
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | export function SmoothScroll({ children }: { children: ReactNode }) {
+  7 |   useEffect(() => {
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/providers/smooth-scroll.tsx
+    ./src/app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/components/layout/settings-dropdown.tsx:4:1
+Module not found: Can't resolve 'next-themes'
+  2 |
+  3 | import * as React from "react"
+> 4 | import { useTheme } from "next-themes"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import { motion, AnimatePresence } from "framer-motion"
+  6 | import { toast } from "sonner"
+  7 | import { useCurrency, CURRENCIES, DATE_FORMATS } from "@/components/providers/currency-provider"
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/components/layout/settings-dropdown.tsx [Client Component Browser]
+    ./src/components/layout/dashboard-header.tsx [Client Component Browser]
+    ./src/components/layout/main-layout.tsx [Client Component Browser]
+    ./src/components/layout/main-layout.tsx [Server Component]
+    ./src/app/dashboard/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/layout/settings-dropdown.tsx [Client Component SSR]
+    ./src/components/layout/dashboard-header.tsx [Client Component SSR]
+    ./src/components/layout/main-layout.tsx [Client Component SSR]
+    ./src/components/layout/main-layout.tsx [Server Component]
+    ./src/app/dashboard/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/components/providers/theme-provider.tsx:4:1
+Module not found: Can't resolve 'next-themes'
+  2 |
+  3 | import * as React from "react"
+> 4 | import { ThemeProvider as NextThemesProvider } from "next-themes"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | export function ThemeProvider({
+  7 |   children,
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/providers/theme-provider.tsx
+    ./src/app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/components/ui/sonner.tsx:3:1
+Module not found: Can't resolve 'next-themes'
+  1 | "use client"
+  2 |
+> 3 | import { useTheme } from "next-themes"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 | import { Toaster as Sonner } from "sonner"
+  5 |
+  6 | type ToasterProps = React.ComponentProps<typeof Sonner>
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/ui/sonner.tsx
+    ./src/app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/components/views/dashboard-view.tsx:6:1
+Module not found: Can't resolve 'recharts'
+  4 | import { motion, AnimatePresence } from "framer-motion"
+  5 | import { Bot, Activity, CheckCircle2, AlertTriangle, Clock, Zap, Eye, Brain, Shield, FileText, TrendingUp, AlertCircle, RefreshCw, Loader2 } from "lucide-react"
+> 6 | import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, LineChart, Line, PieChart, Pie, AreaChart, Area } from 'recharts';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 |
+  8 | import {
+  9 |     mockAgentMetrics,
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/views/dashboard-view.tsx
+    ./src/app/dashboard/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/components/layout/settings-dropdown.tsx:6:1
+Module not found: Can't resolve 'sonner'
+  4 | import { useTheme } from "next-themes"
+  5 | import { motion, AnimatePresence } from "framer-motion"
+> 6 | import { toast } from "sonner"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import { useCurrency, CURRENCIES, DATE_FORMATS } from "@/components/providers/currency-provider"
+  8 | import {
+  9 |     Palette,
+
+
+
+Import traces:
+  Client Component Browser:
+    ./src/components/layout/settings-dropdown.tsx [Client Component Browser]
+    ./src/components/layout/dashboard-header.tsx [Client Component Browser]
+    ./src/components/layout/main-layout.tsx [Client Component Browser]
+    ./src/components/layout/main-layout.tsx [Server Component]
+    ./src/app/dashboard/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/layout/settings-dropdown.tsx [Client Component SSR]
+    ./src/components/layout/dashboard-header.tsx [Client Component SSR]
+    ./src/components/layout/main-layout.tsx [Client Component SSR]
+    ./src/components/layout/main-layout.tsx [Server Component]
+    ./src/app/dashboard/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./src/components/ui/sonner.tsx:4:1
+Module not found: Can't resolve 'sonner'
+  2 |
+  3 | import { useTheme } from "next-themes"
+> 4 | import { Toaster as Sonner } from "sonner"
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 |
+  6 | type ToasterProps = React.ComponentProps<typeof Sonner>
+  7 |
+
+
+
+Import trace:
+  Server Component:
+    ./src/components/ui/sonner.tsx
+    ./src/app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at async transform (turbopack:///[turbopack-node]/transforms/postcss.ts:70:34) [C:\Users\RYZEN\Desktop\migrateX\.next\build\chunks\[root-of-the-server]__51225daf._.js:146:36])
+    at async run (turbopack:///[turbopack-node]/ipc/evaluate.ts:92:23) [C:\Users\RYZEN\Desktop\migrateX\.next\build\chunks\[root-of-the-server]__974941ed._.js:443:31])
+    at <unknown> (./src/components/providers/smooth-scroll.tsx:4:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/components/layout/settings-dropdown.tsx:4:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/components/providers/theme-provider.tsx:4:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/components/ui/sonner.tsx:3:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/components/views/dashboard-view.tsx:6:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/components/layout/settings-dropdown.tsx:6:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./src/components/ui/sonner.tsx:4:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)

@@ -1,22 +1,21 @@
 import React, { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
-import { useTheme } from "next-themes";
 
 interface NeuralBackgroundProps {
     className?: string;
     /**
-     * Color of the particles. 
-     * Defaults to a cyan/indigo mix if not specified.
+     * Color of the particles.
+     * Defaults to a subtle luxury gold accent.
      */
     color?: string;
     /**
      * The opacity of the trails (0.0 to 1.0).
      * Lower = longer trails. Higher = shorter trails.
-     * Default: 0.1
+     * Default: 0.15
      */
     trailOpacity?: number;
     /**
-     * Number of particles. Default: 800
+     * Number of particles. Default: 600
      */
     particleCount?: number;
     /**
@@ -27,14 +26,13 @@ interface NeuralBackgroundProps {
 
 export default function NeuralBackground({
     className,
-    color = "#6366f1", // Default Indigo
+    color = "rgba(201, 162, 77, 0.65)", // 🥇 luxury muted gold
     trailOpacity = 0.15,
     particleCount = 600,
     speed = 1,
 }: NeuralBackgroundProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
-    const { theme } = useTheme();
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -44,14 +42,12 @@ export default function NeuralBackground({
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
-        // --- CONFIGURATION ---
         let width = container.clientWidth;
         let height = container.clientHeight;
         let particles: Particle[] = [];
         let animationFrameId: number;
-        let mouse = { x: -1000, y: -1000 }; // Start off-screen
+        let mouse = { x: -1000, y: -1000 };
 
-        // --- PARTICLE CLASS ---
         class Particle {
             x: number;
             y: number;
@@ -66,20 +62,16 @@ export default function NeuralBackground({
                 this.vx = 0;
                 this.vy = 0;
                 this.age = 0;
-                // Random lifespan to create natural recycling
                 this.life = Math.random() * 200 + 100;
             }
 
             update() {
-                // 1. Flow Field Math (Simplex-ish noise)
-                // We calculate an angle based on position to create the "flow"
-                const angle = (Math.cos(this.x * 0.005) + Math.sin(this.y * 0.005)) * Math.PI;
+                const angle =
+                    (Math.cos(this.x * 0.005) + Math.sin(this.y * 0.005)) * Math.PI;
 
-                // 2. Add force from flow field
                 this.vx += Math.cos(angle) * 0.2 * speed;
                 this.vy += Math.sin(angle) * 0.2 * speed;
 
-                // 3. Mouse Repulsion/Attraction
                 const dx = mouse.x - this.x;
                 const dy = mouse.y - this.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
@@ -87,24 +79,18 @@ export default function NeuralBackground({
 
                 if (distance < interactionRadius) {
                     const force = (interactionRadius - distance) / interactionRadius;
-                    // Push away
                     this.vx -= dx * force * 0.05;
                     this.vy -= dy * force * 0.05;
                 }
 
-                // 4. Apply Velocity & Friction
                 this.x += this.vx;
                 this.y += this.vy;
-                this.vx *= 0.95; // Friction to stop infinite acceleration
+                this.vx *= 0.95;
                 this.vy *= 0.95;
 
-                // 5. Aging
                 this.age++;
-                if (this.age > this.life) {
-                    this.reset();
-                }
+                if (this.age > this.life) this.reset();
 
-                // 6. Wrap around screen
                 if (this.x < 0) this.x = width;
                 if (this.x > width) this.x = 0;
                 if (this.y < 0) this.y = height;
@@ -122,20 +108,18 @@ export default function NeuralBackground({
 
             draw(context: CanvasRenderingContext2D) {
                 context.fillStyle = color;
-                // Fade in and out based on age
-                const alpha = 1 - Math.abs((this.age / this.life) - 0.5) * 2;
+                const alpha = 1 - Math.abs(this.age / this.life - 0.5) * 2;
                 context.globalAlpha = alpha;
-                context.fillRect(this.x, this.y, 1.5, 1.5); // Tiny dots are faster than arcs
+                context.fillRect(this.x, this.y, 1.5, 1.5);
             }
         }
 
-        // --- INITIALIZATION ---
         const init = () => {
-            // Handle High-DPI screens (Retina)
             const dpr = window.devicePixelRatio || 1;
             canvas.width = width * dpr;
             canvas.height = height * dpr;
-            ctx.scale(dpr, dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
             canvas.style.width = `${width}px`;
             canvas.style.height = `${height}px`;
 
@@ -145,23 +129,8 @@ export default function NeuralBackground({
             }
         };
 
-        // --- ANIMATION LOOP ---
         const animate = () => {
-            // "Fade" effect: Instead of clearing the canvas, we draw a semi-transparent rect
-            // This creates the "Trails" look.
-
-            // Determine fade color based on active theme
-            const isLight = theme === "light";
-            // Use the CSS variable values roughly, or exact hexes
-            // Light: #F9FAFB (rgb(249, 250, 251))
-            // Dark: #000000
-
-            if (isLight) {
-                ctx.fillStyle = `rgba(249, 250, 251, ${trailOpacity})`;
-            } else {
-                ctx.fillStyle = `rgba(0, 0, 0, ${trailOpacity})`;
-            }
-
+            ctx.fillStyle = `rgba(18, 16, 12, ${trailOpacity})`; // warm charcoal → gold-friendly
             ctx.fillRect(0, 0, width, height);
 
             particles.forEach((p) => {
@@ -172,7 +141,6 @@ export default function NeuralBackground({
             animationFrameId = requestAnimationFrame(animate);
         };
 
-        // --- EVENT LISTENERS ---
         const handleResize = () => {
             width = container.clientWidth;
             height = container.clientHeight;
@@ -188,9 +156,8 @@ export default function NeuralBackground({
         const handleMouseLeave = () => {
             mouse.x = -1000;
             mouse.y = -1000;
-        }
+        };
 
-        // Start
         init();
         animate();
 
@@ -204,10 +171,13 @@ export default function NeuralBackground({
             container.removeEventListener("mouseleave", handleMouseLeave);
             cancelAnimationFrame(animationFrameId);
         };
-    }, [color, trailOpacity, particleCount, speed, theme]);
+    }, [color, trailOpacity, particleCount, speed]);
 
     return (
-        <div ref={containerRef} className={cn("relative w-full h-full bg-background overflow-hidden", className)}>
+        <div
+            ref={containerRef}
+            className={cn("relative w-full h-full bg-[#0F0F0F] overflow-hidden", className)}
+        >
             <canvas ref={canvasRef} className="block w-full h-full" />
         </div>
     );
