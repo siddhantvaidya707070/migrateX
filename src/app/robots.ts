@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
             allow: '/',
             disallow: '/private/',
         },
-        sitemap: 'https://macane.ai/sitemap.xml',
+        sitemap: 'https://migratex.com/sitemap.xml',
     }
 }

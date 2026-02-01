@@ -33,7 +33,6 @@ import { cn } from "@/lib/utils"
 import { useAuth } from "@/components/providers/auth-provider"
 
 const sections = [
-    { id: 'appearance', label: 'Appearance', icon: Palette },
     { id: 'account', label: 'Profile & Account', icon: User },
     { id: 'security', label: 'Security', icon: Shield },
     { id: 'privacy', label: 'Privacy', icon: Eye },
@@ -43,12 +42,9 @@ const sections = [
 ]
 
 const themes = [
-    { id: 'theme-blacked', label: 'Classic Blacked', color: '#000000' },
-    { id: 'theme-stoned', label: 'Stoned Grey', color: '#1c1c1c' },
-    { id: 'theme-light-pro', label: 'Light Pro', color: '#F9FAFB' },
-    { id: 'theme-midnight', label: 'Midnight', color: '#0a0812' },
-    { id: 'theme-slate', label: 'Slate Blue', color: '#0f172a' },
+    { id: 'dark', label: 'Dark Mode', color: '#000000', description: 'Professional dark theme' },
 ]
+
 
 interface SettingsDropdownProps {
     isOpen: boolean
@@ -57,7 +53,7 @@ interface SettingsDropdownProps {
     defaultSection?: string
 }
 
-export function SettingsDropdown({ isOpen, onClose, triggerRef, defaultSection = 'appearance' }: SettingsDropdownProps) {
+export function SettingsDropdown({ isOpen, onClose, triggerRef, defaultSection = 'account' }: SettingsDropdownProps) {
     const [activeSection, setActiveSection] = React.useState(defaultSection)
     const { theme, setTheme } = useTheme()
     const { currency, setCurrency, dateFormat, setDateFormat } = useCurrency()
@@ -154,7 +150,7 @@ export function SettingsDropdown({ isOpen, onClose, triggerRef, defaultSection =
                                             }}
                                             className={cn(
                                                 "flex items-center justify-between p-3 rounded-lg border transition-all text-left group",
-                                                (theme === t.id || (t.id === 'theme-blacked' && (theme === 'dark' || !theme)))
+                                                theme === t.id
                                                     ? "bg-primary/5 border-primary/50"
                                                     : "bg-secondary/5 border-border hover:border-border/80 hover:bg-secondary/10"
                                             )}
@@ -162,11 +158,14 @@ export function SettingsDropdown({ isOpen, onClose, triggerRef, defaultSection =
                                             <div className="flex items-center gap-3">
                                                 <div
                                                     className="w-6 h-6 rounded-full border shadow-sm"
-                                                    style={{ backgroundColor: t.color }}
+                                                    style={{ backgroundColor: t.color, borderColor: t.id === 'light' ? '#e5e7eb' : undefined }}
                                                 />
-                                                <span className="text-sm font-medium">{t.label}</span>
+                                                <div>
+                                                    <div className="text-sm font-medium">{t.label}</div>
+                                                    <div className="text-xs text-muted-foreground">{t.description}</div>
+                                                </div>
                                             </div>
-                                            {(theme === t.id || (t.id === 'theme-blacked' && (theme === 'dark' || !theme))) && (
+                                            {theme === t.id && (
                                                 <Check className="w-4 h-4 text-primary" />
                                             )}
                                         </button>
@@ -195,7 +194,7 @@ export function SettingsDropdown({ isOpen, onClose, triggerRef, defaultSection =
                                                     <label className="text-xs text-muted-foreground">Email</label>
                                                     <p className="text-sm font-medium">{user?.email || 'No email linked'}</p>
                                                 </div>
-                                                <div className="px-2 py-0.5 rounded-full bg-green-500/10 text-green-500 text-[10px] font-medium border border-green-500/20">
+                                                <div className="px-2 py-0.5 rounded-full bg-[#C9A24D]/10 text-[#C9A24D] text-[10px] font-medium border border-[#C9A24D]/20">
                                                     Verified
                                                 </div>
                                             </div>
@@ -325,8 +324,8 @@ export function SettingsDropdown({ isOpen, onClose, triggerRef, defaultSection =
                             {activeSection === 'support' && (
                                 <>
                                     <SettingsItem icon={HelpCircle} label="Help Center" onClick={() => window.open('https://example.com/help', '_blank')} />
-                                    <SettingsItem icon={MessageSquare} label="Contact Support" onClick={() => window.open('mailto:support@macane.ai')} />
-                                    <SettingsItem icon={Info} label="About" badge="v1.0.5" onClick={() => toast("MACANE v1.0.5", { description: "Build 2024.10.15" })} />
+                                    <SettingsItem icon={MessageSquare} label="Contact Support" onClick={() => window.open('mailto:support@migratex.ai')} />
+                                    <SettingsItem icon={Info} label="About" badge="v1.0.5" onClick={() => toast("migrateX v1.0.5", { description: "Build 2024.10.15" })} />
                                 </>
                             )}
                         </div>

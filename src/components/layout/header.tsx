@@ -45,14 +45,14 @@ export function Header() {
                             <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-black flex items-center justify-center border border-white/10 shadow-lg group-hover:scale-105 transition-transform duration-300">
                                 <img
                                     src="/logo.jpg"
-                                    alt="MACANE Logo"
+                                    alt="migrateX Logo"
                                     className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity"
                                 />
                                 {/* Glow effect behind logo */}
                                 <div className="absolute inset-0 bg-primary/20 blur-md -z-10" />
                             </div>
                             <span className="text-xl font-bold tracking-tight text-foreground bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
-                                MACANE
+                                migrateX
                             </span>
                         </Link>
 
