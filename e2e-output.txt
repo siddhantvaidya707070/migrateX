@@ -1,0 +1,58 @@
+﻿[dotenv@17.2.3] injecting env (4) from .env.local -- tip: ΓÜÖ∩╕Å  write to custom object with { processEnv: myObject }
+
+============================================================
+  END-TO-END DASHBOARD TEST
+============================================================
+
+1. INITIAL STATE
+----------------------------------------
+   Events: 100
+   Observations: 16
+   Decisions: 36
+   Actions: 10 executed, 16 pending
+
+2. TRIGGERING SIMULATION
+----------------------------------------
+   Config: {"scenario":"checkout_failure","risk_profile":"high","event_count":15,"merchant_count":3,"timing":"burst","auto_trigger_agent":true}
+   Γ£à Simulation SUCCESS
+   Run ID: sim_checkout_failure_ml2yjj4r_kudw
+   Events generated: 15
+   Merchants affected: 3
+
+3. AGENT LOOP RESULTS
+----------------------------------------
+   Observations processed: N/A
+   Run ID: N/A
+   Stages completed: 0
+
+4. FINAL STATE
+----------------------------------------
+   Events: 115 (+15 new)
+   Observations: 17 (+1 new)
+   Decisions: 38 (+2 new)
+   High Risk: 71
+   Actions: 11 executed, 17 pending
+
+5. ACTIVITY FEED
+----------------------------------------
+   Activities: 10
+   Recent observations: 5
+   Recent decisions: 5
+   Pending actions: 2
+
+6. DATABASE VERIFICATION
+----------------------------------------
+   Events with this run_id: 15
+   Recent observations:
+     - checkout_failure:schema_mismat... (3 merchants, investigating)
+     - checkout_failure:schema_mismat... (3 merchants, investigating)
+     - doc_gap:parameter_confusion:ap... (3 merchants, investigating)
+   Recent decisions:
+     - merchant_misconfiguration (70% confidence)
+     - migration_error (85% confidence)
+     - merchant_misconfiguration (70% confidence)
+   Audit logs for this run: 0
+
+============================================================
+  TEST COMPLETE
+============================================================

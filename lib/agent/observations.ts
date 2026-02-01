@@ -80,6 +80,7 @@ export const ObservationEngine = {
                 const { error: updateError } = await supabase.from('observations').update({
                     last_seen: new Date().toISOString(),
                     merchant_count: uniqueMerchants.length || existingObs.merchant_count + 1,
+                    status: 'active', // Reactivate so agent loop reprocesses
                     metadata: {
                         ...existingObs.metadata,
                         affected_merchants: uniqueMerchants,

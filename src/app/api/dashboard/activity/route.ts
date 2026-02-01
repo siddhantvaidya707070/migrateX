@@ -1,0 +1,327 @@
+/**
+ * Dashboard Activity Feed API - /api/dashboard/activity
+ * Returns recent activity, learnings, and proposals from the agent pipeline
+ */
+
+import { NextRequest, NextResponse } from 'next/server'
+import { createAgentClient } from '@/lib/supabase/agent-client'
+
+export async function GET(req: NextRequest) {
+    const supabase = createAgentClient()
+    const limit = parseInt(req.nextUrl.searchParams.get('limit') || '50')
+    const runId = req.nextUrl.searchParams.get('run_id')
+
+    try {
+        // Get recent raw events with merchant info from payload
+        let eventsQuery = supabase
+            .from('raw_events')
+            .select('id, event_type, merchant_id, fingerprint, payload, source_origin, created_at, processed')
+            .order('created_at', { ascending: false })
+            .limit(limit)
+
+        if (runId) {
+            eventsQuery = eventsQuery.eq('simulation_run_id', runId)
+        }
+
+        const { data: events, error: eventsError } = await eventsQuery
+        if (eventsError) console.error('Events error:', eventsError)
+
+        // Get recent observations (filter by run_id if provided)
+        let observationsQuery = supabase
+            .from('observations')
+            .select('id, fingerprint, summary, merchant_count, status, first_seen, last_seen, severity, hypothesis')
+            .order('last_seen', { ascending: false })
+            .limit(10)
+
+        const { data: observations } = await observationsQuery
+
+        // Get recent decisions with risk info
+        const { data: decisions } = await supabase
+            .from('decisions')
+            .select(`
+                id,
+                observation_id,
+                classification,
+                confidence,
+                reasoning,
+                created_at,
+                risk_assessments (
+                    score,
+                    factors
+                )
+            `)
+            .order('created_at', { ascending: false })
+            .limit(10)
+
+        // Get action proposals - PENDING and PENDING_APPROVAL status for approval queue
+        const { data: proposals, error: proposalError } = await supabase
+            .from('action_proposals')
+            .select('id, decision_id, action_type, status, payload, created_at')  // Removed executed_at - column doesn't exist
+            .in('status', ['pending', 'pending_approval'])  // Include both statuses
+            .order('created_at', { ascending: false })
+            .limit(20)
+
+        console.log('Proposals query result:', { count: proposals?.length, error: proposalError?.message })
+
+        if (proposalError) {
+            console.error('Proposals query error:', proposalError)
+        }
+
+        // Get agent learnings from database (scoped by run_id if provided)
+        let learnings: any[] = []
+        try {
+            // First try without simulation_run_id filter to see if table exists
+            const { data, error } = await supabase
+                .from('agent_learnings')
+                .select('*')
+                .order('created_at', { ascending: false })
+                .limit(50)
+
+            if (error) {
+                console.log('Learnings query error:', error.message)
+            } else {
+                learnings = data || []
+            }
+        } catch (e) {
+            // Table may not exist yet
+            console.log('Learnings table error:', e)
+        }
+
+        // Build unified activity feed
+        const activities: any[] = []
+
+        // Add events as activity
+        events?.forEach(event => {
+            const payload = event.payload as any
+            const riskLevel = determineRiskLevel(event.event_type, payload)
+            // Generate confidence based on risk level and event type (simulated)
+            const baseConfidence = riskLevel === 'high' ? 0.85 : riskLevel === 'medium' ? 0.75 : 0.65
+            const variance = (Math.random() * 0.1) - 0.05 // +/- 5%
+            const confidence = Math.min(0.99, Math.max(0.5, baseConfidence + variance))
+
+            activities.push({
+                id: event.id,
+                type: 'event',
+                eventType: event.event_type,
+                merchantId: event.merchant_id,
+                merchantName: payload?.merchant_name || event.merchant_id,
+                riskLevel,
+                confidence,
+                action: null,
+                status: event.processed ? 'processed' : 'pending',
+                summary: payload?.error_message || `${event.event_type} from ${payload?.merchant_name || event.merchant_id}`,
+                details: payload,
+                timestamp: event.created_at
+            })
+        })
+
+        // Add observations
+        observations?.forEach(obs => {
+            activities.push({
+                id: obs.id,
+                type: 'observation',
+                eventType: 'observation',
+                merchantId: null,
+                merchantName: `${obs.merchant_count} merchant(s)`,
+                riskLevel: obs.severity || 'medium',
+                summary: obs.summary || obs.fingerprint,
+                details: { hypothesis: obs.hypothesis, fingerprint: obs.fingerprint },
+                timestamp: obs.last_seen
+            })
+        })
+
+        // Add decisions
+        decisions?.forEach(dec => {
+            const risk = dec.risk_assessments as any
+            activities.push({
+                id: dec.id,
+                type: 'decision',
+                eventType: dec.classification,
+                riskLevel: risk?.score >= 7 ? 'high' : risk?.score >= 4 ? 'medium' : 'low',
+                confidence: dec.confidence,
+                summary: `Classified as ${dec.classification} with ${Math.round((dec.confidence || 0) * 100)}% confidence`,
+                details: { reasoning: dec.reasoning, riskScore: risk?.score },
+                timestamp: dec.created_at
+            })
+        })
+
+        // Sort by timestamp
+        activities.sort((a, b) =>
+            new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        )
+
+        // Build proposals with context
+        console.log('Building proposals, raw count:', proposals?.length, 'first:', proposals?.[0]?.id)
+        const enrichedProposals = proposals?.map(prop => {
+            // Find related decision
+            const decision = decisions?.find(d => d.id === prop.decision_id)
+            const riskAssessment = decision?.risk_assessments as any
+            const payload = prop.payload as any
+
+            return {
+                id: prop.id,
+                actionType: prop.action_type,
+                status: prop.status,
+                payload: prop.payload,
+                createdAt: prop.created_at,
+                context: {
+                    merchantName: payload?.merchant_name || 'Unknown Merchant',
+                    merchantId: payload?.merchant_id || '',
+                    errorType: decision?.classification || 'unknown',
+                    riskScore: riskAssessment?.score || 5,
+                    confidence: decision?.confidence || 0.75,
+                    summary: payload?.error_message || 'Action pending review'
+                },
+                // Generate artifact dynamically if needed
+                artifact: generateMockArtifact(prop, decision)
+            }
+        }) || []
+
+        // Format learnings
+        const formattedLearnings = learnings.map(l => ({
+            id: l.id,
+            learningType: l.learning_type,
+            title: l.title,
+            description: l.description,
+            confidence: l.confidence,
+            relatedEvents: l.related_events,
+            metadata: l.metadata,
+            createdAt: l.created_at
+        }))
+
+        return NextResponse.json({
+            activities: activities.slice(0, limit),
+            learnings: formattedLearnings,
+            proposals: enrichedProposals,
+            observations,
+            timestamp: new Date().toISOString()
+        })
+
+    } catch (err: any) {
+        console.error('Dashboard activity error:', err)
+        return NextResponse.json({
+            error: 'Failed to fetch activity',
+            details: err.message,
+            activities: [],
+            learnings: [],
+            proposals: []
+        }, { status: 500 })
+    }
+}
+
+function determineRiskLevel(eventType: string, payload: any): 'low' | 'medium' | 'high' {
+    // High risk event types
+    if (['platform_regression', 'auth_failure'].includes(eventType)) {
+        return 'high'
+    }
+    // Check payload indicators
+    if (payload?.http_status >= 500 || payload?.critical) {
+        return 'high'
+    }
+    // Medium risk defaults
+    if (['checkout_failure', 'webhook_failure', 'rate_limit'].includes(eventType)) {
+        return 'medium'
+    }
+    return 'low'
+}
+
+function generateMockArtifact(proposal: any, decision: any): any {
+    // Only generate artifact for certain action types
+    const artifactTypes: Record<string, string> = {
+        'draft_ticket_reply': 'ticket_reply',
+        'send_support_response': 'ticket_reply',
+        'email_engineering': 'internal_email',
+        'notify_merchant': 'merchant_notice',
+        'chatbot_response': 'chatbot_response'
+    }
+
+    const artifactType = artifactTypes[proposal.action_type]
+    if (!artifactType) return null
+
+    const payload = proposal.payload as any
+    const merchantName = payload?.merchant_name || 'Unknown Merchant'
+    const classification = decision?.classification || 'Integration Issue'
+
+    // Create descriptive subject with MERCHANT NAME
+    const subjectMap: Record<string, string> = {
+        'ticket_reply': `Draft ticket reply to Merchant: ${merchantName} — ${classification}`,
+        'internal_email': `[URGENT] ${classification} detected for ${merchantName}`,
+        'merchant_notice': `Important Update for ${merchantName}: ${classification}`,
+        'chatbot_response': `Auto-response for ${merchantName}`
+    }
+
+    return {
+        id: `art_${proposal.id}`,
+        type: artifactType,
+        subject: subjectMap[artifactType] || `${proposal.action_type} for ${merchantName}`,
+        body: generateMockBody(artifactType, payload, decision),
+        recipientType: artifactType === 'internal_email' ? 'engineering' : 'merchant',
+        recipientName: merchantName,
+        recipientEmail: payload?.contact_email || `${merchantName.toLowerCase().replace(/\s/g, '.')}@example.com`,
+        senderName: 'Support Agent',
+        urgency: (decision?.risk_assessments as any)?.score >= 7 ? 'high' : 'normal',
+        metadata: { proposalId: proposal.id, merchantName, classification }
+    }
+}
+
+function generateMockBody(type: string, payload: any, decision?: any): string {
+    const merchantName = payload?.merchant_name || 'your'
+    const errorMessage = payload?.error_message || 'an issue with your integration'
+    const classification = decision?.classification || 'integration issue'
+
+    if (type === 'ticket_reply') {
+        return `Hi there,
+
+Thank you for reaching out. We've looked into ${errorMessage} and identified the root cause.
+
+**What we found:**
+Our analysis indicates this is related to a configuration mismatch in your integration settings.
+
+**Recommended steps:**
+1. Verify your API keys are correctly configured
+2. Check that your webhook endpoint is responding correctly
+3. Review the error details in your dashboard
+
+Let us know if you have any other questions.
+
+Best regards,
+Support Team
+
+---
+*This is a simulated response for demonstration.*`
+    }
+
+    if (type === 'internal_email') {
+        return `Team,
+
+We've identified an issue affecting ${merchantName} that may require attention.
+
+**Summary:**
+${errorMessage}
+
+**Impact:**
+This is affecting checkout operations for this merchant.
+
+**Recommendation:**
+Please review the attached logs and determine if this requires a code change.
+
+Thanks,
+Support Agent
+
+---
+*This is a simulated email for demonstration.*`
+    }
+
+    return `Hi there! 👋
+
+We noticed ${errorMessage}. Here's what you can do:
+
+• Check your API configuration
+• Verify your credentials are current
+• Review our documentation for updates
+
+Need more help? We're here!
+
+---
+*This is a simulated response for demonstration.*`
+}

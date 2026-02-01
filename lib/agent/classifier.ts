@@ -6,6 +6,10 @@ export type Classification =
     | 'migration_error'
     | 'platform_regression'
     | 'documentation_gap'
+    | 'checkout_failure'
+    | 'auth_failure'
+    | 'webhook_failure'
+    | 'rate_limit'
 
 export interface Decision {
     type: Classification
@@ -53,7 +57,52 @@ export const Classifier = {
             }
         }
 
-        // 2. MIGRATION ERROR
+        // 2. CHECKOUT FAILURE - High priority customer-impacting issues
+        if (context.includes('checkout') || context.includes('payment') ||
+            context.includes('transaction') || fingerprint.includes('checkout')) {
+            return {
+                type: 'checkout_failure',
+                confidence: riskScore >= 5 ? 0.85 : 0.7,
+                reasoning: `Checkout/payment issue affecting ${merchantCount} merchant(s) with risk ${riskScore}`,
+                suggestedAction: riskScore >= 5 ? 'draft_ticket_reply' : 'send_support_response'
+            }
+        }
+
+        // 3. AUTH FAILURE - Security sensitive
+        if (context.includes('auth') || context.includes('token') ||
+            context.includes('credential') || context.includes('login') ||
+            fingerprint.includes('auth')) {
+            return {
+                type: 'auth_failure',
+                confidence: 0.8,
+                reasoning: `Authentication/authorization issue affecting ${merchantCount} merchant(s)`,
+                suggestedAction: 'draft_ticket_reply'
+            }
+        }
+
+        // 4. WEBHOOK FAILURE - Integration issues
+        if (context.includes('webhook') || context.includes('callback') ||
+            context.includes('notification') || fingerprint.includes('webhook')) {
+            return {
+                type: 'webhook_failure',
+                confidence: 0.75,
+                reasoning: `Webhook/integration issue affecting ${merchantCount} merchant(s)`,
+                suggestedAction: 'draft_ticket_reply'
+            }
+        }
+
+        // 5. RATE LIMIT - Traffic issues
+        if (context.includes('rate') || context.includes('limit') ||
+            context.includes('throttle') || context.includes('429')) {
+            return {
+                type: 'rate_limit',
+                confidence: 0.8,
+                reasoning: `Rate limiting issue affecting ${merchantCount} merchant(s)`,
+                suggestedAction: 'draft_ticket_reply'
+            }
+        }
+
+        // 6. MIGRATION ERROR
         // Multi-merchant + migration context = likely migration issue
         if (observation.migration_stage || context.includes('migration') || context.includes('stage')) {
             if (merchantCount > 1) {
@@ -83,7 +132,7 @@ export const Classifier = {
             }
         }
 
-        // 3. DOCUMENTATION GAP
+        // 7. DOCUMENTATION GAP
         // Keywords indicating user confusion or API misunderstanding
         if (context.includes('docs') || context.includes('documentation')) {
             return {
@@ -112,7 +161,7 @@ export const Classifier = {
             }
         }
 
-        // 4. MERCHANT MISCONFIGURATION (Default)
+        // 8. MERCHANT MISCONFIGURATION (Default)
         // Single merchant, configuration keywords, or no other match
         let confidence = 0.5
 

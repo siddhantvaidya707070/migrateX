@@ -1,10 +1,10 @@
 import { MainLayout } from "@/components/layout/main-layout";
-import { DashboardView } from "@/components/views/dashboard-view";
+import { AgentDashboard } from "@/components/views/agent-dashboard";
 
 export default function Dashboard() {
     return (
         <MainLayout>
-            <DashboardView />
+            <AgentDashboard />
         </MainLayout>
     );
 }

@@ -146,6 +146,16 @@ export const RiskEngine = {
             return true
         }
 
+        // Auth/Webhook/Rate limit issues are customer-facing and sensitive
+        if (['auth_failure', 'webhook_failure', 'rate_limit'].includes(classification) && riskScore >= 5) {
+            return true
+        }
+
+        // Medium-high risk checkout issues need review
+        if (classification === 'checkout_failure' && riskScore >= 6) {
+            return true
+        }
+
         return false
     }
 }
