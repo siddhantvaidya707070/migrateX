@@ -59,11 +59,11 @@ const ERROR_TYPE_ICONS: Record<string, any> = {
     checkout_failure: { icon: Zap, color: 'text-red-400', bg: 'bg-red-500/10' },
     documentation_gap: { icon: FileQuestion, color: 'text-amber-400', bg: 'bg-amber-500/10' },
     webhook_failure: { icon: Webhook, color: 'text-orange-400', bg: 'bg-orange-500/10' },
-    auth_failure: { icon: KeyRound, color: 'text-purple-400', bg: 'bg-purple-500/10' },
+    auth_failure: { icon: KeyRound, color: 'text-[#E6C97A]', bg: 'bg-[#C9A24D]/10' },
     rate_limit: { icon: Timer, color: 'text-cyan-400', bg: 'bg-cyan-500/10' },
     merchant_misconfig: { icon: Settings2, color: 'text-blue-400', bg: 'bg-blue-500/10' },
     platform_regression: { icon: AlertTriangle, color: 'text-red-500', bg: 'bg-red-500/20' },
-    migration_error: { icon: ActivityIcon, color: 'text-violet-400', bg: 'bg-violet-500/10' },
+    migration_error: { icon: ActivityIcon, color: 'text-[#E6C97A]', bg: 'bg-[#C9A24D]/10' },
     default: { icon: ActivityIcon, color: 'text-slate-400', bg: 'bg-slate-500/10' }
 }
 
@@ -260,7 +260,7 @@ function ActivityItem({ activity, onExpand, onViewReasoning }: {
             layout
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-4 rounded-lg bg-slate-800/40 border border-white/5 hover:border-violet-500/30 transition-all"
+            className="p-4 rounded-lg bg-[#1A1A1A]/40 border border-[#C9A24D]/10 hover:border-[#C9A24D]/30 transition-all"
         >
             <div className="flex items-start gap-3">
                 {/* Icon */}
@@ -336,7 +336,7 @@ function ActivityItem({ activity, onExpand, onViewReasoning }: {
                                 {/* Agent Actions */}
                                 <div>
                                     <div className="flex items-center gap-2 mb-2">
-                                        <Send className="w-3.5 h-3.5 text-violet-400" />
+                                        <Send className="w-3.5 h-3.5 text-[#E6C97A]" />
                                         <span className="text-xs font-medium text-white">Agent Actions</span>
                                     </div>
                                     <ul className="space-y-1">
@@ -378,14 +378,14 @@ function ActivityItem({ activity, onExpand, onViewReasoning }: {
                     <div className="flex items-center gap-3 mt-2">
                         <button
                             onClick={handleExpand}
-                            className="text-xs text-violet-400 hover:text-violet-300 transition-colors flex items-center gap-1"
+                            className="text-xs text-[#E6C97A] hover:text-[#F5F5F5] transition-colors flex items-center gap-1"
                         >
                             {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                             {isExpanded ? 'Hide' : 'Show'} Actions
                         </button>
                         <button
                             onClick={onViewReasoning}
-                            className="text-xs text-cyan-400 hover:text-cyan-300 transition-colors flex items-center gap-1"
+                            className="text-xs text-[#C9A24D] hover:text-[#E6C97A] transition-colors flex items-center gap-1"
                         >
                             <Eye className="w-3 h-3" />
                             View Full Reasoning
@@ -448,7 +448,7 @@ export function LiveActivityV2({ activities, isLoading, onEventClick }: LiveActi
     if (isLoading && activities.length === 0) {
         return (
             <div className="flex items-center justify-center h-48">
-                <Loader2 className="w-6 h-6 animate-spin text-violet-400" />
+                <Loader2 className="w-6 h-6 animate-spin text-[#E6C97A]" />
             </div>
         )
     }
@@ -460,14 +460,14 @@ export function LiveActivityV2({ activities, isLoading, onEventClick }: LiveActi
                 <button
                     onClick={() => setShowFilters(!showFilters)}
                     className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border transition-all ${hasActiveFilters
-                        ? 'border-violet-500/30 bg-violet-500/10 text-violet-300'
+                        ? 'border-[#C9A24D]/30 bg-[#C9A24D]/10 text-[#E6C97A]'
                         : 'border-white/10 bg-white/5 text-slate-400 hover:text-white hover:border-white/20'
                         }`}
                 >
                     <Filter className="w-4 h-4" />
                     Filters
                     {hasActiveFilters && (
-                        <span className="px-1.5 py-0.5 text-xs bg-violet-500/20 text-violet-300 rounded">
+                        <span className="px-1.5 py-0.5 text-xs bg-[#C9A24D]/20 text-[#E6C97A] rounded">
                             {filters.eventTypes.length + filters.riskLevels.length}
                         </span>
                     )}
@@ -503,7 +503,7 @@ export function LiveActivityV2({ activities, isLoading, onEventClick }: LiveActi
                                                 key={type}
                                                 onClick={() => toggleFilter('eventTypes', type)}
                                                 className={`px-2 py-1 text-xs rounded border transition-all ${filters.eventTypes.includes(type)
-                                                    ? 'border-violet-500/30 bg-violet-500/10 text-violet-300'
+                                                    ? 'border-[#C9A24D]/30 bg-[#C9A24D]/10 text-[#E6C97A]'
                                                     : 'border-white/10 bg-white/5 text-slate-400 hover:text-white hover:border-white/20'
                                                     }`}
                                             >
@@ -522,7 +522,7 @@ export function LiveActivityV2({ activities, isLoading, onEventClick }: LiveActi
                                             key={level}
                                             onClick={() => toggleFilter('riskLevels', level)}
                                             className={`px-2 py-1 text-xs rounded border transition-all ${filters.riskLevels.includes(level)
-                                                ? 'border-violet-500/30 bg-violet-500/10 text-violet-300'
+                                                ? 'border-[#C9A24D]/30 bg-[#C9A24D]/10 text-[#E6C97A]'
                                                 : 'border-white/10 bg-white/5 text-slate-400 hover:text-white hover:border-white/20'
                                                 }`}
                                         >
@@ -569,7 +569,7 @@ export function LiveActivityV2({ activities, isLoading, onEventClick }: LiveActi
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     onClick={() => setVisibleCount(prev => prev + ITEMS_PER_PAGE)}
-                    className="w-full py-3 px-4 rounded-lg bg-violet-500/10 border border-violet-500/20 text-violet-300 hover:bg-violet-500/20 hover:border-violet-500/30 transition-all font-medium flex items-center justify-center gap-2"
+                    className="w-full py-3 px-4 rounded-lg bg-[#C9A24D]/10 border border-[#C9A24D]/20 text-[#E6C97A] hover:bg-[#C9A24D]/20 hover:border-[#C9A24D]/30 transition-all font-medium flex items-center justify-center gap-2"
                 >
                     <ChevronDown className="w-4 h-4" />
                     Load More ({filteredActivities.length - visibleCount} remaining)

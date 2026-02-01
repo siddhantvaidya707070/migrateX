@@ -21,19 +21,19 @@ export function ActivityTabs({ activities, learnings, isLoading, onEventClick }:
 
     return (
         <div className="flex flex-col h-full">
-            {/* Tab Switcher */}
-            <div className="flex items-center gap-1 p-1 bg-slate-800/50 rounded-lg mb-4">
+            {/* Tab Switcher - GOLD THEME */}
+            <div className="flex items-center gap-1 p-1 bg-[#1A1A1A]/50 rounded-lg mb-4">
                 <button
                     onClick={() => setActiveTab('live')}
                     className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-md font-medium text-sm transition-all ${activeTab === 'live'
-                        ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-lg shadow-violet-500/20'
-                        : 'text-slate-400 hover:text-white hover:bg-white/5'
+                        ? 'bg-gradient-to-r from-[#9E7C32] via-[#C9A24D] to-[#E6C97A] text-black shadow-lg shadow-[#C9A24D]/20'
+                        : 'text-[#8A8A8A] hover:text-white hover:bg-white/5'
                         }`}
                 >
                     <Activity className="w-4 h-4" />
                     Live Activity
                     {activities.length > 0 && (
-                        <span className={`px-1.5 py-0.5 text-xs rounded-full ${activeTab === 'live' ? 'bg-white/20' : 'bg-violet-500/20 text-violet-400'
+                        <span className={`px-1.5 py-0.5 text-xs rounded-full ${activeTab === 'live' ? 'bg-black/20' : 'bg-[#C9A24D]/20 text-[#E6C97A]'
                             }`}>
                             {activities.length}
                         </span>
@@ -43,14 +43,14 @@ export function ActivityTabs({ activities, learnings, isLoading, onEventClick }:
                 <button
                     onClick={() => setActiveTab('logs')}
                     className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-md font-medium text-sm transition-all ${activeTab === 'logs'
-                        ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-lg shadow-violet-500/20'
-                        : 'text-slate-400 hover:text-white hover:bg-white/5'
+                        ? 'bg-gradient-to-r from-[#9E7C32] via-[#C9A24D] to-[#E6C97A] text-black shadow-lg shadow-[#C9A24D]/20'
+                        : 'text-[#8A8A8A] hover:text-white hover:bg-white/5'
                         }`}
                 >
                     <BookOpen className="w-4 h-4" />
                     Agent Logs
                     {learningsCount > 0 && (
-                        <span className={`px-1.5 py-0.5 text-xs rounded-full ${activeTab === 'logs' ? 'bg-white/20' : 'bg-emerald-500/20 text-emerald-400'
+                        <span className={`px-1.5 py-0.5 text-xs rounded-full ${activeTab === 'logs' ? 'bg-black/20' : 'bg-[#C9A24D]/20 text-[#E6C97A]'
                             }`}>
                             {learningsCount}
                         </span>

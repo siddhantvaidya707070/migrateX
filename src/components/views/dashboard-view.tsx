@@ -31,7 +31,18 @@ import { ApprovalQueueV2 } from '../ui/approval-queue-v2'
 import { PipelinePopup } from '../ui/pipeline-popup'
 
 // ============================================
-// PREMIUM STAT CARD COMPONENT
+// GOLD THEME COLORS
+// ============================================
+const goldTheme = {
+    primary: '#C9A24D',
+    primaryLight: '#E6C97A',
+    primaryDark: '#9E7C32',
+    background: '#0F0F0F',
+    surface: '#1A1A1A',
+}
+
+// ============================================
+// PREMIUM STAT CARD COMPONENT - GOLD THEME
 // ============================================
 
 interface StatCardProps {
@@ -39,53 +50,55 @@ interface StatCardProps {
     value: string | number
     subValue?: string
     icon: any
-    color: 'violet' | 'emerald' | 'amber' | 'red' | 'blue' | 'cyan'
+    color: 'gold' | 'emerald' | 'amber' | 'red' | 'blue' | 'cyan'
     pulse?: boolean
 }
 
 function StatCard({ label, value, subValue, icon: Icon, color, pulse }: StatCardProps) {
     const colorConfig = {
-        violet: {
-            gradient: 'from-violet-500/20 via-purple-500/15 to-fuchsia-500/10',
-            border: 'border-violet-500/30',
-            iconBg: 'bg-violet-500/20',
-            iconColor: 'text-violet-400',
-            glow: 'shadow-violet-500/20'
+        gold: {
+            gradient: 'from-[#C9A24D]/20 via-[#E6C97A]/15 to-[#9E7C32]/10',
+            border: 'border-[#C9A24D]/30',
+            iconBg: 'bg-[#C9A24D]/20',
+            iconColor: 'text-[#E6C97A]',
+            glow: 'shadow-[#C9A24D]/20'
         },
         emerald: {
-            gradient: 'from-emerald-500/20 via-green-500/15 to-teal-500/10',
-            border: 'border-emerald-500/30',
+            // Gold background with green icon for Tickets Drafted
+            gradient: 'from-[#C9A24D]/20 via-[#E6C97A]/15 to-[#9E7C32]/10',
+            border: 'border-[#C9A24D]/30',
             iconBg: 'bg-emerald-500/20',
             iconColor: 'text-emerald-400',
-            glow: 'shadow-emerald-500/20'
+            glow: 'shadow-[#C9A24D]/20'
         },
         amber: {
-            gradient: 'from-amber-500/20 via-yellow-500/15 to-orange-500/10',
-            border: 'border-amber-500/30',
-            iconBg: 'bg-amber-500/20',
-            iconColor: 'text-amber-400',
-            glow: 'shadow-amber-500/20'
+            gradient: 'from-[#C9A24D]/20 via-[#E6C97A]/15 to-[#9E7C32]/10',
+            border: 'border-[#C9A24D]/30',
+            iconBg: 'bg-[#C9A24D]/20',
+            iconColor: 'text-[#E6C97A]',
+            glow: 'shadow-[#C9A24D]/20'
         },
         red: {
-            gradient: 'from-red-500/20 via-rose-500/15 to-pink-500/10',
-            border: 'border-red-500/30',
+            // Gold background with red icon for Emails Drafted
+            gradient: 'from-[#C9A24D]/20 via-[#E6C97A]/15 to-[#9E7C32]/10',
+            border: 'border-[#C9A24D]/30',
             iconBg: 'bg-red-500/20',
             iconColor: 'text-red-400',
-            glow: 'shadow-red-500/20'
+            glow: 'shadow-[#C9A24D]/20'
         },
         blue: {
-            gradient: 'from-blue-500/20 via-cyan-500/15 to-sky-500/10',
-            border: 'border-blue-500/30',
-            iconBg: 'bg-blue-500/20',
-            iconColor: 'text-blue-400',
-            glow: 'shadow-blue-500/20'
+            gradient: 'from-[#9E7C32]/20 via-[#C9A24D]/15 to-[#E6C97A]/10',
+            border: 'border-[#C9A24D]/30',
+            iconBg: 'bg-[#C9A24D]/20',
+            iconColor: 'text-[#E6C97A]',
+            glow: 'shadow-[#C9A24D]/20'
         },
         cyan: {
-            gradient: 'from-cyan-500/20 via-teal-500/15 to-emerald-500/10',
-            border: 'border-cyan-500/30',
-            iconBg: 'bg-cyan-500/20',
-            iconColor: 'text-cyan-400',
-            glow: 'shadow-cyan-500/20'
+            gradient: 'from-[#E6C97A]/20 via-[#C9A24D]/15 to-[#9E7C32]/10',
+            border: 'border-[#C9A24D]/30',
+            iconBg: 'bg-[#C9A24D]/20',
+            iconColor: 'text-[#E6C97A]',
+            glow: 'shadow-[#C9A24D]/20'
         }
     }
 
@@ -117,14 +130,14 @@ function StatCard({ label, value, subValue, icon: Icon, color, pulse }: StatCard
 
             <div className="relative z-10 flex items-start justify-between">
                 <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">
+                    <p className="text-xs font-semibold text-[#8A8A8A] uppercase tracking-widest mb-2">
                         {label}
                     </p>
-                    <p className="text-3xl font-bold text-white tracking-tight">
+                    <p className="text-3xl font-bold text-[#F5F5F5] tracking-tight">
                         {typeof value === 'number' ? value.toLocaleString() : value}
                     </p>
                     {subValue && (
-                        <p className="text-xs text-slate-400 mt-1.5 truncate">
+                        <p className="text-xs text-[#8A8A8A] mt-1.5 truncate">
                             {subValue}
                         </p>
                     )}
@@ -144,7 +157,7 @@ function StatCard({ label, value, subValue, icon: Icon, color, pulse }: StatCard
 }
 
 // ============================================
-// AGENT STATUS CARD
+// AGENT STATUS CARD - GOLD THEME
 // ============================================
 
 function AgentStatusCard() {
@@ -152,32 +165,32 @@ function AgentStatusCard() {
         <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500/10 via-green-500/5 to-teal-500/10 border border-emerald-500/30 p-6 backdrop-blur-xl"
+            className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#C9A24D]/10 via-[#E6C97A]/5 to-[#9E7C32]/10 border border-[#C9A24D]/30 p-6 backdrop-blur-xl"
         >
             {/* Ambient glow */}
-            <div className="absolute -top-16 -right-16 w-48 h-48 bg-emerald-500/20 rounded-full blur-3xl" />
+            <div className="absolute -top-16 -right-16 w-48 h-48 bg-[#C9A24D]/20 rounded-full blur-3xl" />
 
             <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-5">
                     <div className="relative">
-                        <div className="w-3.5 h-3.5 rounded-full bg-emerald-400 shadow-lg shadow-emerald-500/50" />
-                        <div className="absolute inset-0 w-3.5 h-3.5 rounded-full bg-emerald-400 animate-ping opacity-75" />
+                        <div className="w-3.5 h-3.5 rounded-full bg-[#E6C97A] shadow-lg shadow-[#C9A24D]/50" />
+                        <div className="absolute inset-0 w-3.5 h-3.5 rounded-full bg-[#E6C97A] animate-ping opacity-75" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-bold text-white tracking-wide">Agent Status</h3>
-                        <p className="text-xs text-emerald-400 font-medium">Active & Processing</p>
+                        <h3 className="text-sm font-bold text-[#F5F5F5] tracking-wide">Agent Status</h3>
+                        <p className="text-xs text-[#E6C97A] font-medium">Active & Processing</p>
                     </div>
                 </div>
 
                 <div className="space-y-3">
                     {[
-                        { label: 'Uptime', value: '99.9%', color: 'text-white' },
-                        { label: 'Avg Latency', value: '~150ms', color: 'text-white' },
-                        { label: 'Accuracy', value: '94.2%', color: 'text-emerald-400' },
-                        { label: 'Auto-resolved', value: '78%', color: 'text-emerald-400' }
+                        { label: 'Uptime', value: '99.9%', color: 'text-[#F5F5F5]' },
+                        { label: 'Avg Latency', value: '~150ms', color: 'text-[#F5F5F5]' },
+                        { label: 'Accuracy', value: '94.2%', color: 'text-[#E6C97A]' },
+                        { label: 'Auto-resolved', value: '78%', color: 'text-[#E6C97A]' }
                     ].map((stat) => (
                         <div key={stat.label} className="flex items-center justify-between text-sm">
-                            <span className="text-slate-400">{stat.label}</span>
+                            <span className="text-[#8A8A8A]">{stat.label}</span>
                             <span className={`font-semibold ${stat.color}`}>{stat.value}</span>
                         </div>
                     ))}
@@ -188,34 +201,34 @@ function AgentStatusCard() {
 }
 
 // ============================================
-// QUICK ACTIONS BAR
+// QUICK ACTIONS BAR - GOLD THEME
 // ============================================
 
-function QuickActionsBar({ stats }: { stats: any }) {
+function QuickActionsBar({ stats, learningsCount }: { stats: any; learningsCount: number }) {
     return (
         <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-4 py-3 px-5 rounded-xl bg-slate-800/50 border border-white/5 backdrop-blur-sm"
+            className="flex items-center gap-4 py-3 px-5 rounded-xl bg-[#1A1A1A]/50 border border-[#C9A24D]/10 backdrop-blur-sm"
         >
             <div className="flex items-center gap-2">
-                <MessageSquare className="w-4 h-4 text-violet-400" />
-                <span className="text-sm text-slate-300">
-                    <span className="font-semibold text-white">{stats.ticketsDrafted || 0}</span> tickets drafted
+                <MessageSquare className="w-4 h-4 text-[#E6C97A]" />
+                <span className="text-sm text-[#CFCFCF]">
+                    <span className="font-semibold text-[#F5F5F5]">{stats.ticketsDrafted || 0}</span> tickets drafted
                 </span>
             </div>
-            <div className="w-px h-4 bg-white/10" />
+            <div className="w-px h-4 bg-[#C9A24D]/20" />
             <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-blue-400" />
-                <span className="text-sm text-slate-300">
-                    <span className="font-semibold text-white">{stats.emailsDrafted || 0}</span> emails drafted
+                <Mail className="w-4 h-4 text-[#C9A24D]" />
+                <span className="text-sm text-[#CFCFCF]">
+                    <span className="font-semibold text-[#F5F5F5]">{stats.emailsDrafted || 0}</span> emails drafted
                 </span>
             </div>
-            <div className="w-px h-4 bg-white/10" />
+            <div className="w-px h-4 bg-[#C9A24D]/20" />
             <div className="flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-emerald-400" />
-                <span className="text-sm text-slate-300">
-                    <span className="font-semibold text-white">{stats.learningsCount || 0}</span> learnings
+                <TrendingUp className="w-4 h-4 text-[#9E7C32]" />
+                <span className="text-sm text-[#CFCFCF]">
+                    <span className="font-semibold text-[#F5F5F5]">{learningsCount}</span> learnings
                 </span>
             </div>
         </motion.div>
@@ -223,7 +236,7 @@ function QuickActionsBar({ stats }: { stats: any }) {
 }
 
 // ============================================
-// MAIN DASHBOARD VIEW
+// MAIN DASHBOARD VIEW - GOLD THEME
 // ============================================
 
 export function DashboardView() {
@@ -257,15 +270,15 @@ export function DashboardView() {
     }
 
     return (
-        <div className="min-h-screen bg-[#0a0a0f]">
-            {/* Background gradient effects */}
+        <div className="min-h-screen bg-black">
+            {/* Background gradient effects - GOLD THEME */}
             <div className="fixed inset-0 pointer-events-none">
-                <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[128px]" />
-                <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[128px]" />
+                <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#C9A24D]/5 rounded-full blur-[128px]" />
+                <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-[#9E7C32]/5 rounded-full blur-[128px]" />
             </div>
 
             <div className="relative z-10 max-w-[1600px] mx-auto px-6 py-8">
-                {/* Header */}
+                {/* Header - GOLD THEME */}
                 <motion.header
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -274,15 +287,15 @@ export function DashboardView() {
                     <div className="flex items-center gap-4">
                         <motion.div
                             whileHover={{ scale: 1.05, rotate: 5 }}
-                            className="p-3.5 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 shadow-xl shadow-violet-500/30"
+                            className="p-3.5 rounded-2xl bg-gradient-to-br from-[#9E7C32] to-[#C9A24D] shadow-xl shadow-[#C9A24D]/30"
                         >
-                            <Bot className="w-7 h-7 text-white" />
+                            <Bot className="w-7 h-7 text-black" />
                         </motion.div>
                         <div>
-                            <h1 className="text-2xl lg:text-3xl font-bold text-white tracking-tight">
+                            <h1 className="text-2xl lg:text-3xl font-bold text-[#F5F5F5] tracking-tight">
                                 Self-Healing Support Agent
                             </h1>
-                            <p className="text-slate-400 text-sm mt-0.5">
+                            <p className="text-[#8A8A8A] text-sm mt-0.5">
                                 Autonomous Signal Processing & Decision Engine
                             </p>
                         </div>
@@ -295,7 +308,7 @@ export function DashboardView() {
                             whileTap={{ scale: 0.98 }}
                             onClick={() => resetUI()}
                             disabled={isSimulating}
-                            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-white/5 text-slate-400 hover:text-white transition-all disabled:opacity-50"
+                            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1A1A1A]/80 hover:bg-[#2A2A2A]/80 border border-[#C9A24D]/10 text-[#8A8A8A] hover:text-[#F5F5F5] transition-all disabled:opacity-50"
                         >
                             <RotateCcw className="w-4 h-4" />
                             <span className="text-sm font-medium">Reset</span>
@@ -307,18 +320,18 @@ export function DashboardView() {
                             whileTap={{ scale: 0.98 }}
                             onClick={() => refreshData()}
                             disabled={isLoading}
-                            className="p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-white/5 text-slate-400 hover:text-white transition-all disabled:opacity-50"
+                            className="p-2.5 rounded-xl bg-[#1A1A1A]/80 hover:bg-[#2A2A2A]/80 border border-[#C9A24D]/10 text-[#8A8A8A] hover:text-[#F5F5F5] transition-all disabled:opacity-50"
                         >
                             <RefreshCw className={`w-5 h-5 ${isLoading ? 'animate-spin' : ''}`} />
                         </motion.button>
 
-                        {/* Start Simulation Button */}
+                        {/* Start Simulation Button - GOLD GRADIENT */}
                         <motion.button
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.97 }}
                             onClick={() => setShowSimulationModal(true)}
                             disabled={isSimulating}
-                            className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white font-semibold rounded-xl shadow-lg shadow-violet-500/30 transition-all disabled:opacity-50"
+                            className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#9E7C32] via-[#C9A24D] to-[#E6C97A] hover:shadow-lg hover:shadow-[#C9A24D]/30 text-black font-semibold rounded-xl transition-all disabled:opacity-50"
                         >
                             {isSimulating ? (
                                 <>
@@ -352,10 +365,10 @@ export function DashboardView() {
 
                 {/* Quick Actions Bar */}
                 <div className="mb-8">
-                    <QuickActionsBar stats={stats} />
+                    <QuickActionsBar stats={stats} learningsCount={learnings.length} />
                 </div>
 
-                {/* Stats Grid - 6 columns */}
+                {/* Stats Grid - 6 columns - GOLD THEME */}
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -366,7 +379,7 @@ export function DashboardView() {
                         label="Events Ingested"
                         value={stats.eventsIngested}
                         icon={Zap}
-                        color="violet"
+                        color="gold"
                         pulse={isSimulating}
                     />
                     <StatCard
@@ -409,7 +422,7 @@ export function DashboardView() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="lg:col-span-2 rounded-2xl bg-slate-900/50 border border-white/5 p-6 backdrop-blur-xl"
+                        className="lg:col-span-2 rounded-2xl bg-[#0F0F0F]/50 border border-[#C9A24D]/10 p-6 backdrop-blur-xl"
                     >
                         <ActivityTabs
                             activities={activities}
@@ -426,18 +439,18 @@ export function DashboardView() {
                         transition={{ delay: 0.3 }}
                         className="space-y-6"
                     >
-                        {/* Pending Approvals */}
-                        <div className="rounded-2xl bg-slate-900/50 border border-white/5 p-6 backdrop-blur-xl">
+                        {/* Pending Approvals - GOLD THEME */}
+                        <div className="rounded-2xl bg-[#0F0F0F]/50 border border-[#C9A24D]/10 p-6 backdrop-blur-xl">
                             <div className="flex items-center gap-3 mb-5">
-                                <div className="p-2 rounded-lg bg-amber-500/20">
-                                    <Shield className="w-5 h-5 text-amber-400" />
+                                <div className="p-2 rounded-lg bg-[#C9A24D]/20">
+                                    <Shield className="w-5 h-5 text-[#E6C97A]" />
                                 </div>
                                 <div>
-                                    <h2 className="text-lg font-bold text-white">Pending Approvals</h2>
-                                    <p className="text-xs text-slate-400">Human-in-the-loop review queue</p>
+                                    <h2 className="text-lg font-bold text-[#F5F5F5]">Pending Approvals</h2>
+                                    <p className="text-xs text-[#8A8A8A]">Human-in-the-loop review queue</p>
                                 </div>
                                 {proposals.length > 0 && (
-                                    <span className="ml-auto px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold">
+                                    <span className="ml-auto px-2.5 py-1 rounded-full bg-[#C9A24D]/20 text-[#E6C97A] text-xs font-bold">
                                         {proposals.length}
                                     </span>
                                 )}

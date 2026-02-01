@@ -56,13 +56,13 @@ interface ArtifactModalProps {
 }
 
 const ARTIFACT_TYPE_CONFIG: Record<string, { icon: any, color: string, label: string }> = {
-    internal_email: { icon: Mail, color: '#3b82f6', label: 'Internal Email' },
-    email_engineering: { icon: Mail, color: '#3b82f6', label: 'Engineering Email' },
+    internal_email: { icon: Mail, color: '#C9A24D', label: 'Internal Email' },
+    email_engineering: { icon: Mail, color: '#C9A24D', label: 'Engineering Email' },
     ticket_reply: { icon: MessageSquare, color: '#22c55e', label: 'Ticket Reply' },
-    chatbot_response: { icon: Bot, color: '#a855f7', label: 'Chatbot Response' },
-    merchant_notice: { icon: Bell, color: '#f59e0b', label: 'Merchant Notice' },
+    chatbot_response: { icon: Bot, color: '#C9A24D', label: 'Chatbot Response' },
+    merchant_notice: { icon: Bell, color: '#E6C97A', label: 'Merchant Notice' },
     escalate: { icon: AlertTriangle, color: '#ef4444', label: 'Escalation' },
-    alert_merchant: { icon: Bell, color: '#f59e0b', label: 'Merchant Alert' }
+    alert_merchant: { icon: Bell, color: '#E6C97A', label: 'Merchant Alert' }
 }
 
 export function ArtifactModal({ isOpen, onClose, proposal, onApprove, onReject, isProcessing }: ArtifactModalProps) {
@@ -186,8 +186,8 @@ export function ArtifactModal({ isOpen, onClose, proposal, onApprove, onReject, 
                                         padding: '4px 8px',
                                         fontSize: '10px',
                                         fontWeight: 600,
-                                        color: '#22d3ee',
-                                        background: 'rgba(34, 211, 238, 0.1)',
+                                        color: '#E6C97A',
+                                        background: 'rgba(201, 162, 77, 0.1)',
                                         borderRadius: '4px',
                                         textTransform: 'uppercase',
                                         letterSpacing: '0.05em'
@@ -394,10 +394,10 @@ export function ArtifactModal({ isOpen, onClose, proposal, onApprove, onReject, 
                                             fontSize: '13px',
                                             fontWeight: 600,
                                             color: 'white',
-                                            background: 'linear-gradient(135deg, #10b981, #22c55e)',
+                                            background: 'linear-gradient(135deg, #9E7C32, #C9A24D)',
                                             border: 'none',
                                             borderRadius: '8px',
-                                            boxShadow: '0 2px 8px rgba(16, 185, 129, 0.3)',
+                                            boxShadow: '0 2px 8px rgba(201, 162, 77, 0.3)',
                                             cursor: isProcessing ? 'not-allowed' : 'pointer',
                                             opacity: isProcessing ? 0.5 : 1
                                         }}

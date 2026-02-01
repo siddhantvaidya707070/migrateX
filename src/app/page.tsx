@@ -225,7 +225,7 @@ export default function Home() {
             {/* Right Side Actions */}
             <div className="flex items-center gap-4">
               <Link
-                href="#"
+                href="/dashboard"
                 className="hidden md:inline-flex px-6 py-2.5 text-sm font-semibold text-[#0F0F0F] bg-gradient-to-r from-[#9E7C32] via-[#C9A24D] to-[#E6C97A] rounded-full hover:shadow-lg hover:shadow-[#C9A24D]/30 transition-all duration-300 hover:scale-105"
               >
                 Get Started
@@ -309,7 +309,7 @@ export default function Home() {
               className="flex flex-col sm:flex-row items-center justify-center gap-4"
             >
               <Link
-                href="#"
+                href="/dashboard"
                 className="px-8 py-4 text-base font-semibold text-[#0F0F0F] bg-gradient-to-r from-[#9E7C32] via-[#C9A24D] to-[#E6C97A] rounded-full hover:shadow-2xl hover:shadow-[#C9A24D]/30 transition-all duration-300 hover:scale-105 whitespace-nowrap"
               >
                 Start Managing

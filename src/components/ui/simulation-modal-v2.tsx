@@ -43,7 +43,7 @@ const ERROR_TYPES = [
     { id: 'checkout_failure', label: 'Checkout Failures', icon: Zap, color: 'text-red-400', description: 'Payment processing errors' },
     { id: 'documentation_gap', label: 'Documentation Gaps', icon: FileQuestion, color: 'text-amber-400', description: 'API confusion issues' },
     { id: 'webhook_failure', label: 'Webhook Failures', icon: Webhook, color: 'text-orange-400', description: 'Delivery & signature issues' },
-    { id: 'auth_failure', label: 'Auth Failures', icon: KeyRound, color: 'text-purple-400', description: 'API key & token errors' },
+    { id: 'auth_failure', label: 'Auth Failures', icon: KeyRound, color: 'text-[#E6C97A]', description: 'API key & token errors' },
     { id: 'rate_limit', label: 'Rate Limits', icon: Timer, color: 'text-blue-400', description: 'Throttling & backoff issues' },
     { id: 'merchant_misconfig', label: 'Misconfigurations', icon: Settings2, color: 'text-cyan-400', description: 'Setup & config errors' },
     { id: 'platform_regression', label: 'Platform Issues', icon: AlertTriangle, color: 'text-rose-500', description: 'System-wide regressions' }
@@ -128,7 +128,7 @@ export function SimulationModalV2({ isOpen, onClose, onStart }: SimulationModalV
                     {/* Header */}
                     <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between bg-black/20">
                         <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600">
+                            <div className="p-2 rounded-lg bg-gradient-to-br from-[#9E7C32] to-[#C9A24D]">
                                 <Flame className="w-5 h-5 text-white" />
                             </div>
                             <div>
@@ -147,7 +147,7 @@ export function SimulationModalV2({ isOpen, onClose, onStart }: SimulationModalV
                     {/* Progress Bar */}
                     <div className="h-1 bg-slate-800">
                         <motion.div
-                            className="h-full bg-gradient-to-r from-violet-500 to-purple-500"
+                            className="h-full bg-gradient-to-r from-[#9E7C32] to-[#C9A24D]"
                             initial={{ width: '0%' }}
                             animate={{ width: `${(currentStep / 3) * 100}%` }}
                         />
@@ -180,21 +180,21 @@ export function SimulationModalV2({ isOpen, onClose, onStart }: SimulationModalV
                                                     key={type.id}
                                                     onClick={() => toggleErrorType(type.id)}
                                                     className={`p-4 rounded-lg border-2 transition-all duration-200 text-left group ${isSelected
-                                                        ? 'border-violet-500 bg-violet-500/10'
+                                                        ? 'border-[#C9A24D] bg-[#C9A24D]/10'
                                                         : 'border-white/10 hover:border-white/20 bg-white/5'
                                                         }`}
                                                 >
                                                     <div className="flex items-start gap-3">
-                                                        <div className={`p-2 rounded-lg ${isSelected ? 'bg-violet-500/20' : 'bg-white/10 group-hover:bg-white/15'}`}>
-                                                            <Icon className={`w-4 h-4 ${isSelected ? 'text-violet-400' : type.color}`} />
+                                                        <div className={`p-2 rounded-lg ${isSelected ? 'bg-[#C9A24D]/20' : 'bg-white/10 group-hover:bg-white/15'}`}>
+                                                            <Icon className={`w-4 h-4 ${isSelected ? 'text-[#E6C97A]' : type.color}`} />
                                                         </div>
                                                         <div className="flex-1 min-w-0">
                                                             <div className="flex items-center gap-2">
-                                                                <span className={`font-medium ${isSelected ? 'text-violet-300' : 'text-white'}`}>
+                                                                <span className={`font-medium ${isSelected ? 'text-[#E6C97A]' : 'text-white'}`}>
                                                                     {type.label}
                                                                 </span>
                                                                 {isSelected && (
-                                                                    <Check className="w-4 h-4 text-violet-400" />
+                                                                    <Check className="w-4 h-4 text-[#E6C97A]" />
                                                                 )}
                                                             </div>
                                                             <p className="text-xs text-slate-400 mt-0.5">{type.description}</p>
@@ -230,7 +230,7 @@ export function SimulationModalV2({ isOpen, onClose, onStart }: SimulationModalV
                                                     key={risk.id}
                                                     onClick={() => toggleRiskProfile(risk.id as any)}
                                                     className={`w-full p-4 rounded-lg border-2 transition-all duration-200 text-left ${isSelected
-                                                        ? 'border-violet-500 bg-violet-500/10'
+                                                        ? 'border-[#C9A24D] bg-[#C9A24D]/10'
                                                         : 'border-white/10 hover:border-white/20 bg-white/5'
                                                         }`}
                                                 >
@@ -238,10 +238,10 @@ export function SimulationModalV2({ isOpen, onClose, onStart }: SimulationModalV
                                                         <div className={`w-3 h-3 rounded-full ${risk.color}`} />
                                                         <div className="flex-1">
                                                             <div className="flex items-center gap-2">
-                                                                <span className={`font-medium ${isSelected ? 'text-violet-300' : 'text-white'}`}>
+                                                                <span className={`font-medium ${isSelected ? 'text-[#E6C97A]' : 'text-white'}`}>
                                                                     {risk.label}
                                                                 </span>
-                                                                {isSelected && <Check className="w-4 h-4 text-violet-400" />}
+                                                                {isSelected && <Check className="w-4 h-4 text-[#E6C97A]" />}
                                                             </div>
                                                             <p className="text-sm text-slate-400">{risk.description}</p>
                                                         </div>
@@ -280,10 +280,10 @@ export function SimulationModalV2({ isOpen, onClose, onStart }: SimulationModalV
                                         <div>
                                             <div className="flex items-center justify-between mb-2">
                                                 <label className="text-sm font-medium text-white flex items-center gap-2">
-                                                    <TrendingUp className="w-4 h-4 text-violet-400" />
+                                                    <TrendingUp className="w-4 h-4 text-[#E6C97A]" />
                                                     Events
                                                 </label>
-                                                <span className="text-lg font-bold text-violet-400">{config.eventCount}</span>
+                                                <span className="text-lg font-bold text-[#E6C97A]">{config.eventCount}</span>
                                             </div>
                                             <input
                                                 type="range"
@@ -292,7 +292,7 @@ export function SimulationModalV2({ isOpen, onClose, onStart }: SimulationModalV
                                                 step="1"
                                                 value={config.eventCount}
                                                 onChange={(e) => setConfig(prev => ({ ...prev, eventCount: parseInt(e.target.value) }))}
-                                                className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-violet-500"
+                                                className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#C9A24D]"
                                             />
                                             <div className="flex justify-between text-xs text-slate-500 mt-1">
                                                 <span>5</span>
@@ -330,7 +330,7 @@ export function SimulationModalV2({ isOpen, onClose, onStart }: SimulationModalV
                                         <h4 className="text-sm font-medium text-slate-300 mb-3">Simulation Summary</h4>
                                         <div className="grid grid-cols-2 gap-4 text-center">
                                             <div>
-                                                <div className="text-2xl font-bold text-violet-400">{config.eventCount}</div>
+                                                <div className="text-2xl font-bold text-[#E6C97A]">{config.eventCount}</div>
                                                 <div className="text-xs text-slate-400">Events</div>
                                             </div>
                                             <div>
@@ -361,7 +361,7 @@ export function SimulationModalV2({ isOpen, onClose, onStart }: SimulationModalV
                                 onClick={() => setCurrentStep(s => s + 1)}
                                 disabled={!canProceed()}
                                 className={`px-5 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2 transition-all ${canProceed()
-                                    ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white hover:from-violet-500 hover:to-purple-500'
+                                    ? 'bg-gradient-to-r from-[#9E7C32] to-[#C9A24D] text-white hover:from-[#C9A24D] hover:to-[#E6C97A]'
                                     : 'bg-slate-700 text-slate-400 cursor-not-allowed'
                                     }`}
                             >

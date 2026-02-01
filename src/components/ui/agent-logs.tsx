@@ -38,7 +38,7 @@ interface AgentLogsProps {
 }
 
 const LEARNING_TYPE_CONFIG: Record<string, { icon: any, color: string, bg: string, label: string }> = {
-    pattern_detected: { icon: Sparkles, color: 'text-violet-400', bg: 'bg-violet-500/10', label: 'Pattern Detected' },
+    pattern_detected: { icon: Sparkles, color: 'text-[#E6C97A]', bg: 'bg-[#C9A24D]/10', label: 'Pattern Detected' },
     classification_made: { icon: Brain, color: 'text-blue-400', bg: 'bg-blue-500/10', label: 'Classification Made' },
     doc_update_suggested: { icon: BookOpen, color: 'text-amber-400', bg: 'bg-amber-500/10', label: 'Doc Update Suggested' },
     knowledge_entry: { icon: Database, color: 'text-emerald-400', bg: 'bg-emerald-500/10', label: 'Knowledge Entry' },
@@ -138,7 +138,7 @@ function LearningItem({ learning }: { learning: AgentLearning }) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="p-4 rounded-lg bg-slate-800/40 border border-white/5 hover:border-white/10 transition-colors"
+            className="p-4 rounded-lg bg-[#1A1A1A]/40 border border-[#C9A24D]/10 hover:border-[#C9A24D]/20 transition-colors"
         >
             <div className="flex items-start gap-3">
                 {/* Icon */}
@@ -183,7 +183,7 @@ function LearningItem({ learning }: { learning: AgentLearning }) {
                         <div className="mt-2">
                             <button
                                 onClick={() => setShowRaw(!showRaw)}
-                                className="text-xs text-violet-400 hover:text-violet-300 transition-colors flex items-center gap-1"
+                                className="text-xs text-[#E6C97A] hover:text-[#F5F5F5] transition-colors flex items-center gap-1"
                             >
                                 <Code className="w-3 h-3" />
                                 {showRaw ? 'Hide' : 'View'} Raw Data
@@ -241,7 +241,7 @@ export function AgentLogs({ learnings, isLoading, activities = [] }: AgentLogsPr
 
                 <div className="mt-6 grid grid-cols-2 gap-3 w-full max-w-sm">
                     <div className="p-3 rounded-lg bg-slate-800/30 border border-white/5 text-left">
-                        <Sparkles className="w-4 h-4 text-violet-400 mb-1" />
+                        <Sparkles className="w-4 h-4 text-[#E6C97A] mb-1" />
                         <p className="text-xs text-white font-medium">Pattern Detection</p>
                         <p className="text-xs text-slate-500 mt-0.5">Recurring issues</p>
                     </div>

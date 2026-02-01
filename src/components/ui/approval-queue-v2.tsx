@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
     Mail,
@@ -18,6 +18,7 @@ import {
 } from 'lucide-react'
 import { ArtifactModal } from './artifact-modal'
 import { formatDistanceToNow } from 'date-fns'
+import { toast } from 'sonner'
 
 interface Proposal {
     id: string
@@ -56,16 +57,16 @@ interface ApprovalQueueV2Props {
 }
 
 const ACTION_TYPE_CONFIG: Record<string, { icon: any, color: string, bg: string, label: string }> = {
-    internal_email: { icon: Mail, color: 'text-blue-400', bg: 'bg-blue-500/10', label: 'Email' },
-    email_engineering: { icon: Mail, color: 'text-blue-400', bg: 'bg-blue-500/10', label: 'Eng Email' },
-    ticket_reply: { icon: MessageSquare, color: 'text-green-400', bg: 'bg-green-500/10', label: 'Ticket' },
-    draft_ticket_reply: { icon: MessageSquare, color: 'text-green-400', bg: 'bg-green-500/10', label: 'Ticket' },
-    chatbot_response: { icon: Bot, color: 'text-purple-400', bg: 'bg-purple-500/10', label: 'Chat' },
-    merchant_notice: { icon: Bell, color: 'text-amber-400', bg: 'bg-amber-500/10', label: 'Notice' },
-    send_support_response: { icon: MessageSquare, color: 'text-cyan-400', bg: 'bg-cyan-500/10', label: 'Support' },
-    alert_merchant: { icon: Bell, color: 'text-amber-400', bg: 'bg-amber-500/10', label: 'Alert' },
+    internal_email: { icon: Mail, color: 'text-[#E6C97A]', bg: 'bg-[#C9A24D]/10', label: 'Email' },
+    email_engineering: { icon: Mail, color: 'text-[#E6C97A]', bg: 'bg-[#C9A24D]/10', label: 'Eng Email' },
+    ticket_reply: { icon: MessageSquare, color: 'text-emerald-400', bg: 'bg-emerald-500/10', label: 'Ticket' },
+    draft_ticket_reply: { icon: MessageSquare, color: 'text-emerald-400', bg: 'bg-emerald-500/10', label: 'Ticket' },
+    chatbot_response: { icon: Bot, color: 'text-[#C9A24D]', bg: 'bg-[#C9A24D]/10', label: 'Chat' },
+    merchant_notice: { icon: Bell, color: 'text-[#E6C97A]', bg: 'bg-[#C9A24D]/10', label: 'Notice' },
+    send_support_response: { icon: MessageSquare, color: 'text-[#C9A24D]', bg: 'bg-[#C9A24D]/10', label: 'Support' },
+    alert_merchant: { icon: Bell, color: 'text-[#E6C97A]', bg: 'bg-[#C9A24D]/10', label: 'Alert' },
     escalate: { icon: AlertTriangle, color: 'text-red-400', bg: 'bg-red-500/10', label: 'Escalate' },
-    default: { icon: Mail, color: 'text-slate-400', bg: 'bg-slate-500/10', label: 'Action' }
+    default: { icon: Mail, color: 'text-[#8A8A8A]', bg: 'bg-[#1A1A1A]', label: 'Action' }
 }
 
 // Generate mock proposals from high-risk activities
@@ -220,7 +221,7 @@ function ApprovalCard({ proposal, onClick }: { proposal: Proposal, onClick: () =
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, x: -100 }}
             onClick={onClick}
-            className="w-full p-4 rounded-lg bg-slate-800/40 border border-white/5 hover:border-violet-500/30 hover:bg-slate-800/60 transition-all text-left group"
+            className="w-full p-4 rounded-lg bg-[#1A1A1A]/40 border border-[#C9A24D]/10 hover:border-[#C9A24D]/30 hover:bg-[#1A1A1A]/60 transition-all text-left group"
         >
             <div className="flex items-start gap-3">
                 {/* Icon */}
@@ -237,16 +238,16 @@ function ApprovalCard({ proposal, onClick }: { proposal: Proposal, onClick: () =
                         <span className={`px-1.5 py-0.5 text-xs font-medium rounded ${riskColor}`}>
                             Risk {proposal.context.riskScore}/10
                         </span>
-                        <span className="text-xs text-slate-500">
+                        <span className="text-xs text-[#8A8A8A]">
                             {formatDistanceToNow(new Date(proposal.createdAt), { addSuffix: true })}
                         </span>
                     </div>
 
-                    <h4 className="text-sm font-medium text-white mb-1 truncate">
+                    <h4 className="text-sm font-medium text-[#F5F5F5] mb-1 truncate">
                         {proposal.artifact?.subject || `${proposal.actionType.replace(/_/g, ' ')} for ${proposal.context.merchantName}`}
                     </h4>
 
-                    <div className="flex items-center gap-3 text-xs text-slate-400">
+                    <div className="flex items-center gap-3 text-xs text-[#8A8A8A]">
                         <span className="flex items-center gap-1">
                             <Building2 className="w-3 h-3" />
                             {proposal.context.merchantName}
@@ -259,7 +260,7 @@ function ApprovalCard({ proposal, onClick }: { proposal: Proposal, onClick: () =
                 </div>
 
                 {/* Arrow */}
-                <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-violet-400 transition-colors flex-shrink-0" />
+                <ChevronRight className="w-5 h-5 text-[#8A8A8A] group-hover:text-[#E6C97A] transition-colors flex-shrink-0" />
             </div>
         </motion.button>
     )
@@ -268,12 +269,47 @@ function ApprovalCard({ proposal, onClick }: { proposal: Proposal, onClick: () =
 export function ApprovalQueueV2({ proposals, isLoading, onApprove, onReject, activities = [] }: ApprovalQueueV2Props) {
     const [selectedProposal, setSelectedProposal] = useState<Proposal | null>(null)
     const [isProcessing, setIsProcessing] = useState(false)
+    const [dismissedMockIds, setDismissedMockIds] = useState<Set<string>>(new Set())
+
+    // Load dismissed IDs from localStorage on mount
+    useEffect(() => {
+        try {
+            const stored = localStorage.getItem('dismissed_mock_proposals')
+            if (stored) {
+                setDismissedMockIds(new Set(JSON.parse(stored)))
+            }
+        } catch (e) {
+            console.warn('Failed to load dismissed proposals from localStorage')
+        }
+    }, [])
+
+    // Persist dismissed IDs to localStorage
+    const dismissProposal = (id: string) => {
+        setDismissedMockIds(prev => {
+            const newSet = new Set([...prev, id])
+            try {
+                localStorage.setItem('dismissed_mock_proposals', JSON.stringify([...newSet]))
+            } catch (e) {
+                console.warn('Failed to save dismissed proposals to localStorage')
+            }
+            return newSet
+        })
+    }
 
     const handleApprove = async (id: string) => {
         setIsProcessing(true)
         try {
-            await onApprove(id)
-            setSelectedProposal(null)
+            // For mock proposals, just dismiss them client-side (persisted in localStorage)
+            if (id.startsWith('mock-proposal-')) {
+                dismissProposal(id)
+                toast.success('Action approved (demo mode)')
+                setSelectedProposal(null)
+            } else {
+                await onApprove(id)
+                setSelectedProposal(null)
+            }
+        } catch (err) {
+            // Error is handled by provider with toast
         } finally {
             setIsProcessing(false)
         }
@@ -282,8 +318,17 @@ export function ApprovalQueueV2({ proposals, isLoading, onApprove, onReject, act
     const handleReject = async (id: string) => {
         setIsProcessing(true)
         try {
-            await onReject(id)
-            setSelectedProposal(null)
+            // For mock proposals, just dismiss them client-side (persisted in localStorage)
+            if (id.startsWith('mock-proposal-')) {
+                dismissProposal(id)
+                toast.success('Action rejected (demo mode)')
+                setSelectedProposal(null)
+            } else {
+                await onReject(id)
+                setSelectedProposal(null)
+            }
+        } catch (err) {
+            // Error is handled by provider with toast
         } finally {
             setIsProcessing(false)
         }
@@ -293,14 +338,17 @@ export function ApprovalQueueV2({ proposals, isLoading, onApprove, onReject, act
     const realPendingProposals = proposals.filter(p => p.status === 'pending_approval' || p.status === 'pending')
 
     // If no real pending proposals, generate mock ones from high-risk activities
-    const pendingProposals = realPendingProposals.length > 0
+    const allPendingProposals = realPendingProposals.length > 0
         ? realPendingProposals
         : generateMockProposals(activities)
 
+    // Filter out dismissed mock proposals
+    const pendingProposals = allPendingProposals.filter(p => !dismissedMockIds.has(p.id))
+
     if (isLoading && pendingProposals.length === 0) {
         return (
-            <div className="flex flex-col items-center justify-center h-48 text-slate-400">
-                <Loader2 className="w-6 h-6 animate-spin mb-2" />
+            <div className="flex flex-col items-center justify-center h-48 text-[#8A8A8A]">
+                <Loader2 className="w-6 h-6 animate-spin mb-2 text-[#E6C97A]" />
                 <p className="text-sm">Loading approvals...</p>
             </div>
         )
@@ -308,12 +356,12 @@ export function ApprovalQueueV2({ proposals, isLoading, onApprove, onReject, act
 
     if (pendingProposals.length === 0) {
         return (
-            <div className="flex flex-col items-center justify-center h-48 text-slate-400 text-center">
-                <div className="p-4 rounded-full bg-slate-800/50 mb-3">
+            <div className="flex flex-col items-center justify-center h-48 text-[#8A8A8A] text-center">
+                <div className="p-4 rounded-full bg-[#1A1A1A]/50 mb-3">
                     <Inbox className="w-6 h-6" />
                 </div>
-                <p className="font-medium text-white mb-1">No Pending Approvals</p>
-                <p className="text-sm text-slate-500">High-risk actions will appear here for review.</p>
+                <p className="font-medium text-[#F5F5F5] mb-1">No Pending Approvals</p>
+                <p className="text-sm text-[#8A8A8A]">High-risk actions will appear here for review.</p>
             </div>
         )
     }
@@ -324,8 +372,8 @@ export function ApprovalQueueV2({ proposals, isLoading, onApprove, onReject, act
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-amber-400" />
-                        <span className="text-sm font-medium text-white">
+                        <Clock className="w-4 h-4 text-[#E6C97A]" />
+                        <span className="text-sm font-medium text-[#F5F5F5]">
                             {pendingProposals.length} Pending Approval{pendingProposals.length > 1 ? 's' : ''}
                         </span>
                     </div>

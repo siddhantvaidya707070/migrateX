@@ -121,6 +121,12 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
         setError(null)
         setSelectedEvent(null)
         setSimulationProgress(null)
+        // Clear localStorage for mock proposals
+        try {
+            localStorage.removeItem('dismissed_mock_proposals')
+        } catch (e) {
+            console.warn('Failed to clear localStorage')
+        }
         refreshData()
     }, [])
 
@@ -132,7 +138,11 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
                 : '/api/dashboard/stats'
 
             const res = await fetch(url, { cache: 'no-store' })
-            if (!res.ok) throw new Error('Failed to fetch stats')
+            if (!res.ok) {
+                // Silently fail - don't throw, use defaults
+                console.warn('Stats API returned non-OK status:', res.status)
+                return
+            }
 
             const data = await res.json()
 
@@ -147,7 +157,8 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
                 pendingApprovals: data.pendingApprovals || 0
             })
         } catch (err) {
-            console.error('Failed to fetch stats:', err)
+            // Silently handle errors - dashboard will show zeros
+            console.warn('Failed to fetch stats:', err)
         }
     }, [])
 
@@ -159,7 +170,11 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
                 : '/api/dashboard/activity'
 
             const res = await fetch(url, { cache: 'no-store' })
-            if (!res.ok) throw new Error('Failed to fetch activity')
+            if (!res.ok) {
+                // Silently fail - don't throw, use defaults
+                console.warn('Activity API returned non-OK status:', res.status)
+                return
+            }
 
             const data = await res.json()
 
@@ -167,7 +182,8 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
             setLearnings(data.learnings || [])
             setProposals(data.proposals || [])
         } catch (err) {
-            console.error('Failed to fetch activity:', err)
+            // Silently handle errors - dashboard will show empty lists
+            console.warn('Failed to fetch activity:', err)
         }
     }, [])
 
@@ -203,8 +219,14 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
             })
 
             if (!res.ok) {
-                const error = await res.json()
-                throw new Error(error.error || 'Simulation failed')
+                let errorMsg = 'Simulation failed'
+                try {
+                    const error = await res.json()
+                    errorMsg = error.error || errorMsg
+                } catch {
+                    // Response might not be JSON
+                }
+                throw new Error(errorMsg)
             }
 
             const data = await res.json()
